@@ -10,4 +10,9 @@ public class LoginController {
     public String loginForm() {
         return "/login/loginForm";
     }
+
+    @GetMapping("/signup")
+    public String signupForm() {
+        return "dd";
+    }
 }
