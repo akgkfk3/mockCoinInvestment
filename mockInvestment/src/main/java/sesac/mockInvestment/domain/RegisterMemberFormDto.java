@@ -5,14 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
+import java.sql.Date;
+
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public class MemberDto {
-    private int memberNum;
+public class RegisterMemberFormDto {
     private String id;
     private String password;
     private String name;
@@ -20,7 +20,4 @@ public class MemberDto {
     private char gender;
     private String phoneNumber;
     private String email;
-    private Date registerDate;
-    private long money;
-    private char grade;
 }
