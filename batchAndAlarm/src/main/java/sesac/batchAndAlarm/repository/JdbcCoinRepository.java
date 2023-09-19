@@ -4,13 +4,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import sesac.batchAndAlarm.domain.CoinDto;
-
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 @Repository
 @Slf4j
@@ -27,8 +28,8 @@ public class JdbcCoinRepository implements CoinRepository {
      */
     @Override
     public void updateAllCoin(ArrayList<CoinDto> coinList) {
-        PreparedStatement pstmt = null;
         Connection conn = null;
+        PreparedStatement pstmt = null;
         int updateCheck = 0;
 
         try {
@@ -78,5 +79,57 @@ public class JdbcCoinRepository implements CoinRepository {
                 log.info("pstmt.close() Error!! {}", e);
             }
         }
+    }
+
+    /**
+     * 파라미터로 CoinDto 타입의 List 파라미터를 받아 DB 테이블 (CoinList)에 Update 하는 메소드입니다.
+     * @Author  박성수
+     * @param   없음
+     * @Return  List<CoinDto>
+     */
+    @Override
+    public List<CoinDto> getCoinList() {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        List<CoinDto> coinList = new ArrayList<>();
+
+        String sql = "SELECT * FROM COINLIST";
+
+        try {
+            conn = dataSource.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                // 코인 정보 세팅
+                CoinDto coin = new CoinDto();
+                coin.setMarket("KRW");
+                coin.setName(rs.getString("CoinName"));
+                coin.setOpening_price(rs.getDouble("Opening_Price"));
+                coin.setLow_price(rs.getDouble("Low_Price"));
+                coin.setHigh_price(rs.getDouble("High_Price"));
+                coin.setTrade_price(rs.getDouble("Trade_Price"));
+                coin.setPrev_closing_price(rs.getDouble("Prev_Closing_Price"));
+                coin.setAcc_trade_price_24h(rs.getDouble("Acc_Trade_Price_24H"));
+
+                // List에 추가
+                coinList.add(coin);
+            }
+
+            rs.close();
+            pstmt.close();
+
+        } catch (SQLException ex) {
+            log.info("SQL Exception Error!! {}", ex);
+            try {
+                rs.close();
+                pstmt.close();
+            } catch (SQLException e) {
+                log.info("SQL Exception Error!! {}", e);
+            }
+        }
+        return coinList;
     }
 }
