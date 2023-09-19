@@ -1,5 +1,6 @@
 package sesac.batchAndAlarm;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +21,7 @@ public class WebConfig {
     private String username;
     @Value("${spring.datasource.password}")
     private String password;
+    public static ObjectMapper objectMapper = new ObjectMapper();
 
     @Bean
     public DataSource createDatasource() {
@@ -38,5 +40,4 @@ public class WebConfig {
 
         return new HikariDataSource(hikariConfig);
     }
-
 }

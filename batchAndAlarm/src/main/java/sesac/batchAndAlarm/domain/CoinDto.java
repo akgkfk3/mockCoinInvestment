@@ -1,20 +1,25 @@
 package sesac.batchAndAlarm.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class CoinDto {
-    private String name;
+    private String market;                      // 마켓
 
-    private Double curPrice;
+    private String name;                        // 코인 이름
 
-    private Double CompareToDay;
+    private Double opening_price;               // 금일 시작가
 
-    private Double tradeMoney;
+    private Double low_price;                   // 금일 최저가
+
+    private Double high_price;                  // 금일 최고가
+
+    private Double trade_price;                 // 금일 현재가
+
+    private Double prev_closing_price;          // 전일 종가
+
+    private Double acc_trade_price_24h;         // 거래 대금
 }
