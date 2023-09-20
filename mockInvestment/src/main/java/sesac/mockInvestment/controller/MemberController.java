@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,17 +27,31 @@ public class MemberController {
 
 
     @GetMapping("/member")
-    public String signupForm() {
+    public String signupForm(@ModelAttribute RegisterMemberFormDto registerMemberFormDto) {
         return "/member/registerMember";
     }
 
     @PostMapping("/member")
-    public String signup(@ModelAttribute RegisterMemberFormDto registerMemberFormDto,
+    public String signup(@Validated  @ModelAttribute RegisterMemberFormDto registerMemberFormDto,
                          BindingResult bindingResult) {
 //            @RequestParam("username") String username,
 
-        log.info("DTO {}", registerMemberFormDto.toString());
+        log.info("DTO111 {}", registerMemberFormDto.toString());
+        if(bindingResult.hasErrors()){
 
+            log.info("errors111={}", bindingResult);
+
+//            bindingResult.rejectValue();
+
+            log.info("error {}", bindingResult.getFieldError("id"));
+            log.info("error {}", bindingResult.getFieldError("id"));
+            log.info("error {}", bindingResult.getFieldError("id"));
+            log.info("error {}", bindingResult.getFieldError("id"));
+            log.info("error {}", bindingResult.getFieldError("id"));
+            log.info("error {}", bindingResult.getFieldError("id"));
+
+            return "/member/registerMember";
+        }
         try {
             log.info("save 실행하기 전");
             memberService.save(registerMemberFormDto);

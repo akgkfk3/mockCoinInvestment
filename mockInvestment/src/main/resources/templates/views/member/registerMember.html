@@ -16,10 +16,11 @@
   lang="ko"
   class="light-style customizer-hide"
   dir="ltr"
+  xmlns:th="http://www.thymeleaf.org"
   data-theme="theme-default"
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
-  xmlns:th="http://www.thymeleaf.org"
+
 >
   <head>
     <meta charset="utf-8" />
@@ -63,6 +64,12 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../assets/js/config.js"></script>
+      <style>
+        .field-error{
+            border-color:#dc3545;
+            color:#dc3545;
+        }
+      </style>
   </head>
 
   <body>
@@ -84,60 +91,83 @@
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">회원가입 페이지입니다.🚀</h4>
-              <p class="mb-4">새싹코인 세계로 떠나보세요</p>
+              <h4 class="mb-2">회원가입 페이지입니다.</h4>
+              <p class="mb-4">새싹코인 세계로 떠나보세요 🐱‍🐉</p>
 
-              <form id="formAuthentication" class="mb-3" action="/member" method="POST">
+              <form id="formAuthentication" class="mb-3" action="/member" method="POST" th:object="${registerMemberFormDto}">
+<!--                  <span th:text="${item}"></span>-->
                 <div class="mb-3">
                   <label for="id" class="form-label">ID</label>
                   <input
+                    th:errorclass="field-error"
+                    th:field="*{id}"
                     type="text"
                     class="form-control"
-                    id="id"
-                    name="id"
                     placeholder="사용할 아이디를 입력해주세요."
                     autofocus
                   />
                 </div>
+                  <div class="field-error" th:if="${#fields.hasErrors('id')}" th:errors="*{id}">
+                        아이디 오류입니다. 소문자 및 소문자+숫자 조합으로 2자에서 10자사이로 입력해주세요
+                  </div>
                 <div class="mb-3 form-password-toggle">
                   <label class="form-label" for="password">Password</label>
                   <div class="input-group input-group-merge">
                     <input
+                            th:errorclass="field-error"
+                            th:field="*{password}"
                             type="password"
-                            id="password"
                             class="form-control"
-                            name="password"
                             placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                             aria-describedby="password"
                     />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                    <span class="input-group-text cursor-pointer" th:classappend="${#fields.hasErrors('password')} ? 'field-error' : ''"><i class="bx bx-hide"></i></span>
                   </div>
+                    <div class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                        비밀번호 오류입니다.
+                    </div>
                 </div>
                 <div class="mb-3">
                   <label for="name" class="form-label">Name</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력해주세요." />
+                  <input type="text" class="form-control" th:field="*{name}" placeholder="이름을 입력해주세요." th:errorclass="field-error" />
+                    <div class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                        이름 오류입니다.
+                    </div>
                 </div>
                 <div class="mb-3">
-                  <label for="birthdate" class="form-label">Birthdate</label>
-                  <input type="text" class="form-control" id="birthdate" name="birthDate" placeholder="생년월일을 입력해주세요." />
+                  <label for="birthDate" class="form-label">Birthdate</label>
+                  <input type="text" class="form-control" th:field="*{birthDate}" placeholder="생년월일을 입력해주세요. (ex) 1900-01-01" th:errorclass="field-error" />
+                    <div class="field-error" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}">
+                        생년월일 오류입니다.
+                    </div>
                 </div>
                 <div class="mb-3">
 <!--                  <div class="form-check">-->
                     <label class="form-label" for="gender-male">
                       GENDER
                     </label>
-                    <input class="form-radio-input" type="radio" id="gender-male" name="gender" value="m"/> <label class="form-radio-label" for="gender-male">Male</label>
-                    <input class="form-radio-input" type="radio" id="gender-female" name="gender" value="f"/> <label class="form-radio-label" for="gender-female">Female</label>
+                    <input class="form-radio-input" type="radio" id="gender-male" value="m" name="gender"  th:errorclass="field-error"/> <label class="form-radio-label" for="gender-male">Male</label>
+                    <input class="form-radio-input" type="radio" id="gender-female" value="f" name="gender"  th:errorclass="field-error"/> <label class="form-radio-label" for="gender-female">Female</label>
 
-<!--                  </div>-->
+                    <div class="field-error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" th:errorclass="field-error">
+                        성별 오류입니다.
+                    </div>
                 </div>
+
+<!--                </div>-->
                 <div class="mb-3">
-                  <label for="phone" class="form-label">PhoneNumber</label>
-                  <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="휴대전화 번호를 입력해주세요." />
+                  <label for="phoneNumber" class="form-label">PhoneNumber</label>
+                  <input type="text" class="form-control" th:field="*{phoneNumber}" placeholder="휴대전화 번호를 입력해주세요." th:errorclass="field-error" />
+                    <div class="field-error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">
+                        휴대전화번호 입력 오류입니다.
+                    </div>
                 </div>
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="이메일을 입력해주세요." />
+                  <input type="text" class="form-control" th:field="*{email}" placeholder="이메일을 입력해주세요." th:errorclass="field-error" />
+                    <div class="field-error"th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                        이메일 주소 입력 오류입니다.
+                    </div>
                 </div>
 
 
