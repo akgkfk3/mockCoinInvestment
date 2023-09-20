@@ -38,6 +38,10 @@ public class MemberController {
 
         log.info("DTO111 {}", registerMemberFormDto.toString());
         if(bindingResult.hasErrors()){
+            if (!registerMemberFormDto.getPassword1().equals(registerMemberFormDto.getPassword2())) {
+                bindingResult.rejectValue("password2", "passwordMismatch", "비밀번호가 일치하지 않습니다.");
+                return "/member/registerMember";
+            }
 
             log.info("errors111={}", bindingResult);
 

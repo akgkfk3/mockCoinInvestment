@@ -69,9 +69,6 @@
             border-color:#dc3545;
             color:#dc3545;
         }
-<!--          .field-error-color{-->
-<!--            color:-->
-<!--          }-->
       </style>
   </head>
 
@@ -114,19 +111,31 @@
                         아이디 오류입니다. 소문자 및 소문자+숫자 조합으로 2자에서 10자사이로 입력해주세요
                   </div>
                 <div class="mb-3 form-password-toggle">
-                  <label class="form-label" for="password">Password</label>
+                  <label class="form-label" for="password1">Password</label>
                   <div class="input-group input-group-merge">
                     <input
                             th:errorclass="field-error"
-                            th:field="*{password}"
+                            th:field="*{password1}"
                             type="password"
                             class="form-control"
                             placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                             aria-describedby="password"
                     />
-                    <span class="input-group-text cursor-pointer" th:classappend="${#fields.hasErrors('password')} ? 'field-error' : ''"><i class="bx bx-hide"></i></span>
+                    <span class="input-group-text cursor-pointer" th:classappend="${#fields.hasErrors('password1')} ? 'field-error' : ''"><i class="bx bx-hide"></i></span>
                   </div>
-                    <div class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                    <label class="form-label" for="password2">Password 확인</label>
+                    <div class="input-group input-group-merge">
+                        <input
+                                th:errorclass="field-error"
+                                th:field="*{password2}"
+                                type="password"
+                                class="form-control"
+                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                aria-describedby="password"
+                        />
+                        <span class="input-group-text cursor-pointer" th:classappend="${#fields.hasErrors('password2')} ? 'field-error' : ''"><i class="bx bx-hide"></i></span>
+                    </div>
+                    <div class="field-error" th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}">
                         비밀번호 오류입니다.
                     </div>
                 </div>

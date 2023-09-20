@@ -17,7 +17,7 @@ public class LoginMemberFormDto {
     @NotBlank
     private String id;
 
-//    @NotBlank
+    @NotBlank
 //    @Pattern()
     private String password;
 }

@@ -24,7 +24,12 @@ public class RegisterMemberFormDto {
     @NotNull(message = "비밀번호는 null일 수 없습니다.")
     @NotBlank(message = "비밀번호는 공백일 수 없습니다.")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{4,18}$", message = "비밀번호에 소문자, 대문자, 특수문자 4~18자 사이를 포함해주세요.")
-    private String password;
+    private String password1;
+
+    @NotNull(message = "비밀번호는 null일 수 없습니다.")
+    @NotBlank(message = "비밀번호는 공백일 수 없습니다.")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{4,18}$", message = "비밀번호에 소문자, 대문자, 특수문자 4~18자 사이를 포함해주세요.")
+    private String password2;
 
     @NotNull(message = "이름은 null일 수 없습니다.")
     @Pattern(regexp ="^[a-zA-Z가-힣]*$", message = "이름은 영문자 및 한글만 가능합니다.")

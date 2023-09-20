@@ -55,7 +55,7 @@ public class MemberDaoImp implements MemberDao {
         PreparedStatement pstmt = conn.prepareStatement(sql);
 
         pstmt.setString(1, memberDto.getId());
-        pstmt.setString(2, memberDto.getPassword());
+        pstmt.setString(2, memberDto.getPassword1());
         pstmt.setString(3, memberDto.getName());
 //        pstmt.setDate(4, new java.sql.Date(memberDto.getBirthDate().getTime()));
         pstmt.setDate(4, (Date) memberDto.getBirthDate());
