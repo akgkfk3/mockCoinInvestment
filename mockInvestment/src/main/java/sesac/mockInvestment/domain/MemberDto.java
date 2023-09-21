@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Getter
@@ -12,15 +14,22 @@ import java.util.Date;
 @EqualsAndHashCode
 @ToString
 public class MemberDto {
+
     private int memberNum;
+
     private String id;
+
     private String password;
+
     private String name;
     private Date birthDate;
-    private char gender;
+    private String gender;
     private String phoneNumber;
     private String email;
     private Date registerDate;
     private long money;
     private char grade;
+
+    public MemberDto(String id, String password, String name, java.sql.Date birthDate, String gender, String phoneNumber, String email) {
+    }
 }

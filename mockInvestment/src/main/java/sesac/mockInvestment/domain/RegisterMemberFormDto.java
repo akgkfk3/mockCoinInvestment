@@ -4,10 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.validation.constraints.*;
-import java.sql.Date;
 
 
 @Getter
@@ -23,22 +20,23 @@ public class RegisterMemberFormDto {
 
     @NotNull(message = "비밀번호는 null일 수 없습니다.")
     @NotBlank(message = "비밀번호는 공백일 수 없습니다.")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{4,18}$", message = "비밀번호에 소문자, 대문자, 특수문자 4~18자 사이를 포함해주세요.")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()]).{4,18}$", message = "비밀번호에 소문자, 대문자, 특수문자, 숫자를 포함한 4~18자 사이를 포함해주세요.")
     private String password1;
 
     @NotNull(message = "비밀번호는 null일 수 없습니다.")
     @NotBlank(message = "비밀번호는 공백일 수 없습니다.")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{4,18}$", message = "비밀번호에 소문자, 대문자, 특수문자 4~18자 사이를 포함해주세요.")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()]).{4,18}$", message = "비밀번호에 소문자, 대문자, 특수문자, 숫자를 포함한 4~18자 사이를 포함해주세요.")
     private String password2;
 
     @NotNull(message = "이름은 null일 수 없습니다.")
-    @Pattern(regexp ="^[a-zA-Z가-힣]*$", message = "이름은 영문자 및 한글만 가능합니다.")
+    @Pattern(regexp ="^[a-zA-Z0-9]{2,10}$", message = "이름은 영문자 및 한글만 숫자로 가능합니다.")
     private String name;
 
-    @NotNull(message = "태어난 일시를 yyyy-MM-dd 형식으로 적어주세요.")
-    @Past(message = "생일은 과거 날짜여야 합니다.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birthDate;
+    @NotNull(message = "태어난 일시를 yyyy-mm-dd 형식으로 적어주세요.")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+//    @Past(message = "생일은 과거 날짜여야 합니다.")
+    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "ex) yyyy-MM-dd 형식으로 작성해주세요.")
+    private String birthDate;
 
     @NotNull(message = "성별을 골라주세요. (Male, Female)")
     private String gender;

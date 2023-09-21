@@ -16,6 +16,7 @@
   lang="en"
   class="light-style customizer-hide"
   dir="ltr"
+  xmlns:th="http://www.thymeleaf.org"
   data-theme="theme-default"
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
@@ -62,6 +63,12 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="../assets/js/config.js"></script>
+    <style>
+      .field-error{
+            border-color:#dc3545;
+            color:#dc3545;
+        }
+    </style>
   </head>
 
   <body>
@@ -75,7 +82,7 @@
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a href="../index.html" class="app-brand-link gap-2">
+                <a href="/" class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
                     <img src="../assets/img/ssac.png" alt="새싹코인" width="30px;"/>
                   </span>
@@ -86,7 +93,8 @@
               <h4 class="mb-2">Welcome to 새싹코인</h4>
               <p class="mb-4">가입하신 아이디와 비밀번호로 로그인해주세요.</p>
 
-              <form id="formAuthentication" class="mb-3" action="../index.html" method="POST">
+              <form id="formAuthentication" class="mb-3" action="/login" method="POST"
+              >
                 <div class="mb-3">
                   <label for="id" class="form-label">ID</label>
                   <input
@@ -94,9 +102,11 @@
                     class="form-control"
                     id="id"
                     name="id"
+
                     placeholder="아이디를 입력해주세요."
                     autofocus
                   />
+<!--                  <span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>-->
                 </div>
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
@@ -108,14 +118,16 @@
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
-                      id="password"
                       class="form-control"
+                      id="password"
                       name="password"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="password"
                     />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+<!--                    <span class="input-group-text cursor-pointer" th:classappend="${#fields.hasErrors('password')} ? 'field-error' : ''"><i class="bx bx-hide"></i></span>-->
+
                   </div>
+<!--                  <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>-->
                 </div>
                 <div class="mb-3">
                   <div class="form-check">
