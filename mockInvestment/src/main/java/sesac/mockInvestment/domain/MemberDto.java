@@ -32,4 +32,8 @@ public class MemberDto {
 
     public MemberDto(String id, String password, String name, java.sql.Date birthDate, String gender, String phoneNumber, String email) {
     }
+    public MemberDto(){}
+
+    public MemberDto(String testtest, String testtest1, String date, String m, String s, String mail) {
+    }
 }

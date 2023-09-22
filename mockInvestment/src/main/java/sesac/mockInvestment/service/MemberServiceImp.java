@@ -1,6 +1,8 @@
 package sesac.mockInvestment.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sesac.mockInvestment.domain.MemberDto;
 import sesac.mockInvestment.domain.RegisterMemberFormDto;
@@ -64,5 +66,43 @@ public class MemberServiceImp implements MemberService {
         return this.result;
     }
 
+    @Override
+    public MemberDto login(String id, String password) throws SQLException {
 
+        MemberDto memberDto = memberDao.findById(id);
+//
+//        String rawPassword = password; // 사용자로부터 입력 받은 패스워드
+//
+//        // PasswordEncoder를 생성 (Bcrypt 사용)
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//
+//        // 랜덤 솔트와 함께 패스워드 해싱
+//        String hashedPassword = passwordEncoder.encode(rawPassword);
+//
+//        // 해싱된 패스워드 출력
+//        System.out.println("해싱된 패스워드: " + hashedPassword);
+
+        // 패스워드 검증 예제
+        boolean passwordMatches = passwordEncoder.matches(password, memberDto.getPassword());
+        System.out.println("패스워드 검증 결과: " + passwordMatches);
+
+
+        // 회원을 찾지 못하거나 비밀번호가 일치하지 않는 경우 null 반환
+        if (!passwordMatches) {
+            return null;
+        }
+
+        return memberDto;
+//        return memberDao.findById(id)
+//                .filter(m -> m.getPassword().equals(hashedPassword))
+//                .orElse(null);
+    }
+
+    @Override
+    public boolean isIdDuplicated(String id) throws SQLException {
+        // 아이디 중복 체크를 위해 MemberRepository를 사용하여 아이디로 회원을 조회합니다.
+        MemberDto existingMember = memberDao.findById(id);
+        // 중복되지 않으면 existingMember는 null이며, 중복되면 existingMember에 값이 채워집니다.
+        return existingMember != null;
+    }
 }

@@ -1,17 +1,4 @@
 <!DOCTYPE html>
-
-<!-- =========================================================
-* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
-==============================================================
-
-* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
-
-=========================================================
- -->
-<!-- beautify ignore:start -->
 <html
   lang="en"
   class="light-style customizer-hide"
@@ -49,7 +36,7 @@
     <!-- Core CSS -->
     <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
     <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="..//assets/css/demo.css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
@@ -93,20 +80,20 @@
               <h4 class="mb-2">Welcome to 새싹코인</h4>
               <p class="mb-4">가입하신 아이디와 비밀번호로 로그인해주세요.</p>
 
-              <form id="formAuthentication" class="mb-3" action="/login" method="POST"
-              >
+              <form id="formAuthentication" class="mb-3" action="/login" method="POST" th:object="${loginMemberFormDto}">
                 <div class="mb-3">
                   <label for="id" class="form-label">ID</label>
                   <input
                     type="text"
                     class="form-control"
                     id="id"
-                    name="id"
 
+                    th:field="*{id}"
+                    th:errorclass="field-error"
                     placeholder="아이디를 입력해주세요."
                     autofocus
                   />
-<!--                  <span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>-->
+                  <span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
                 </div>
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
@@ -120,21 +107,23 @@
                       type="password"
                       class="form-control"
                       id="password"
-                      name="password"
+
+                      th:field="*{password}"
+                      th:errorclass="field-error"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="password"
                     />
 <!--                    <span class="input-group-text cursor-pointer" th:classappend="${#fields.hasErrors('password')} ? 'field-error' : ''"><i class="bx bx-hide"></i></span>-->
 
                   </div>
-<!--                  <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>-->
+                  <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                 </div>
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> 기억하기 </label>
-                  </div>
-                </div>
+<!--                <div class="mb-3">-->
+<!--                  <div class="form-check">-->
+<!--                    <input class="form-check-input" type="checkbox" id="remember-me" />-->
+<!--                    <label class="form-check-label" for="remember-me"> 기억하기 </label>-->
+<!--                  </div>-->
+<!--                </div>-->
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">로그인</button>
                 </div>
@@ -151,6 +140,21 @@
           <!-- /Register -->
         </div>
       </div>
+      <!-- Footer -->
+      <footer class="content-footer footer bg-footer-theme flex-column">
+        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+          <div class="mb-2 mb-md-0">
+            ©
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            , Sesac 백엔드과정 <b class="text-primary">새싹 코인</b> 프로젝트
+            <!-- <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a> -->
+          </div>
+
+        </div>
+      </footer>
+      <!-- / Footer -->
     </div>
 
     <!-- / Content -->
@@ -158,18 +162,18 @@
    
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="../../../static/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../../../static/assets/vendor/libs/popper/popper.js"></script>
-    <script src="../../../static/assets/vendor/js/bootstrap.js"></script>
-    <script src="../../../static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../assets/vendor/libs/popper/popper.js"></script>
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="../../../static/assets/vendor/js/menu.js"></script>
+    <script src="../assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
 
     <!-- Main JS -->
-    <script src="../../../static/assets/js/main.js"></script>
+    <script src="../assets/js/main.js"></script>
 
     <!-- Page JS -->
 

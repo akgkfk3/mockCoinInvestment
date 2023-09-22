@@ -727,7 +727,7 @@ const Helpers = {
     const toggler = document.querySelectorAll('.form-password-toggle i')
     if (typeof toggler !== 'undefined' && toggler !== null) {
       toggler.forEach(el => {
-      const formPasswordToggle = el.closest('.form-password-toggle')
+        const formPasswordToggle = el.closest('.form-password-toggle')
         const formPasswordToggleIcon = formPasswordToggle.querySelector('i')
         const formPasswordToggleInput = formPasswordToggle.querySelector('input')
         el.addEventListener('click', e => {

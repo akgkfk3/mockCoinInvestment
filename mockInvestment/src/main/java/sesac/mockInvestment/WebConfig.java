@@ -5,11 +5,17 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import sesac.mockInvestment.argumentresolver.LoginMemberArgumentResolver;
+import sesac.mockInvestment.interceptor.LoginCheckInterceptor;
 import sesac.mockInvestment.interceptor.LoginInterceptor;
 
 import javax.sql.DataSource;
+
+import java.net.Authenticator;
+import java.util.List;
 
 import static com.zaxxer.hikari.util.IsolationLevel.TRANSACTION_READ_COMMITTED;
 
@@ -42,6 +48,34 @@ public class WebConfig implements WebMvcConfigurer {
 
         return new HikariDataSource(hikariConfig);
     }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new LoginMemberArgumentResolver());
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginCheckInterceptor())
+                .order(1)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/", "/login", "css/**", "/*.ico", "/error", "/member","/mypage");
+
+
+
+//        registry.addInterceptor(new LoginInterceptor())
+//                .order(2)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/", "/logout", "css/**", "/*.ico", "/error", "/mypage");
+
+
+//        registry.addInterceptor(new LoginInterceptor())
+//                .order(2)
+//                .addPathPatterns("/**") // 모든 경로에 인터셉터 적용
+//                .excludePathPatterns("/", "/logout", "css/**", "/*.ico", "/error", "/mypage");
+    }
+
+
 
     /*@Override
     public void addInterceptors(InterceptorRegistry registry) {

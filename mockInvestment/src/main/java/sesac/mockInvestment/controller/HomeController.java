@@ -1,8 +1,12 @@
 package sesac.mockInvestment.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import sesac.mockInvestment.argumentresolver.Login;
+import sesac.mockInvestment.domain.LoginMemberFormDto;
+import sesac.mockInvestment.domain.MemberDto;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,6 +20,14 @@ public class HomeController {
 
         response.sendError(HttpServletResponse.SC_FORBIDDEN);
 
-        return null;
+        return "error/4xx";
     }
+
+    @GetMapping("/")
+    public String homeLoginArgumentResolver(@Login LoginMemberFormDto LoginMemberFormDto, Model model) {
+
+        return "index";
+    }
+
+
 }

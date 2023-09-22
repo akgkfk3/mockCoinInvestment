@@ -17,4 +17,8 @@ public interface MemberService {
 
     List<MemberDto> selectAll() throws SQLException;
     String save(RegisterMemberFormDto memberDto) throws SQLException;
+
+    MemberDto login(String id, String password) throws SQLException;
+
+    boolean isIdDuplicated(String id) throws SQLException;
 }

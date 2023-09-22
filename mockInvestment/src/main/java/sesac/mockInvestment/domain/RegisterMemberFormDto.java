@@ -20,12 +20,12 @@ public class RegisterMemberFormDto {
 
     @NotNull(message = "비밀번호는 null일 수 없습니다.")
     @NotBlank(message = "비밀번호는 공백일 수 없습니다.")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()]).{4,18}$", message = "비밀번호에 소문자, 대문자, 특수문자, 숫자를 포함한 4~18자 사이를 포함해주세요.")
+//    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()]).{4,18}$", message = "비밀번호에 소문자, 대문자, 특수문자, 숫자를 포함한 4~18자 사이를 포함해주세요.")
     private String password1;
 
     @NotNull(message = "비밀번호는 null일 수 없습니다.")
     @NotBlank(message = "비밀번호는 공백일 수 없습니다.")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()]).{4,18}$", message = "비밀번호에 소문자, 대문자, 특수문자, 숫자를 포함한 4~18자 사이를 포함해주세요.")
+//    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()]).{4,18}$", message = "비밀번호에 소문자, 대문자, 특수문자, 숫자를 포함한 4~18자 사이를 포함해주세요.")
     private String password2;
 
     @NotNull(message = "이름은 null일 수 없습니다.")
@@ -35,7 +35,7 @@ public class RegisterMemberFormDto {
     @NotNull(message = "태어난 일시를 yyyy-mm-dd 형식으로 적어주세요.")
 //    @DateTimeFormat(pattern = "yyyy-MM-dd")
 //    @Past(message = "생일은 과거 날짜여야 합니다.")
-    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "ex) yyyy-MM-dd 형식으로 작성해주세요.")
+    @Pattern(regexp = "^(19\\d{2}|[2-9]\\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$", message = "ex) 1990-03-03 형식으로 작성해주세요.")
     private String birthDate;
 
     @NotNull(message = "성별을 골라주세요. (Male, Female)")
