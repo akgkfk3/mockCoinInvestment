@@ -95,7 +95,7 @@
                 </li>
                 <!-- Dashboard -->
                 <li class="menu-item">
-                    <a href="index.html" class="menu-link">
+                    <a href="@{/}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Analytics">Main Page</div>
                     </a>
@@ -112,20 +112,20 @@
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">게시판</span>
                 </li>
-                <li class="menu-item" th:>
-                    <a href="tables-basic1.html" class="menu-link">
+                <li class="menu-item" th:classappend="${board['category'] == 'info'} ? 'active' : ' '">
+                    <a href="" th:href="@{/boards(category=info)}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-detail"></i>
                         <div data-i18n="Account Settings">코인 정보</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="tables-basic2.html" class="menu-link">
+                <li class="menu-item" th:classappend="${board['category'] == 'news'} ? 'active' : ' '">
+                    <a href="" th:href="@{/boards(category=news)}" class="menu-link">
                         <i class="menu-icon tf-icons bx bxl-bitcoin"></i>
                         <div data-i18n="Authentications">코인 뉴스</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="tables-basic3.html" class="menu-link">
+                <li class="menu-item" th:classappend="${board['category'] == 'free'} ? 'active' : ' '">
+                    <a href="" th:href="@{/boards(category=free)}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-cube-alt"></i>
                         <div data-i18n="Misc">자유게시판</div>
                     </a>
@@ -155,17 +155,17 @@
                     <div id="board-header">
                         <!-- Title -->
                         <div style="border-bottom: 1px solid #d9dee3">
-                            <h3 id="board-title">제목 예시입니다.</h3>
+                            <h3 id="board-title" th:text="${board['title']}">제목</h3>
                         </div>
                         <!-- Author -->
                         <div class="board-header-container">
                             <div class="board-header-item board-author-container">
                                 <div class="board-author-item">
-                                    <span>비트떡상가즈아</span>
+                                    <span th:text="${board['author']}">비트떡상가즈아</span>
                                 </div>
                                 <div class="board-author-item">
                                     <span>추천수</span>
-                                    <span>50</span>
+                                    <span th:text="${board['recommand']}">50</span>
                                 </div>
                                 <div class="board-author-item">
                                     <span>댓글</span>
@@ -174,11 +174,11 @@
                             </div>
                             <div class="board-header-item board-author-container">
                                 <div class="board-author-item">
-                                    <span>2023.09.21</span>
+                                    <span th:text="${board['registerDate']}">2023.09.21</span>
                                 </div>
                                 <div class="board-author-item">
                                     <span>조회 수</span>
-                                    <span>66</span>
+                                    <span th:text="${board['hit']}">66</span>
                                 </div>
                             </div>
                         </div>
@@ -188,7 +188,7 @@
                     <div id="board-body">
                         <!-- Text -->
                         <div id="board-body-Content">
-                            <p>내용 없음</p>
+                            [(${board['content']})]
                         </div>
 
 
@@ -198,6 +198,11 @@
                                 추천 수
                                 <span>50</span>
                             </button>
+                        </div>
+                        <!-- Download -->
+                        <div th:if="${board['originalFileName'] != null}">
+                            <span class="m-lg-2">[파일 다운로드]</span>
+                            <a th:href="@{/download/{path}(path=${board['serverFileName']})}" th:text="${board['originalFileName']}"></a>
                         </div>
                     </div>
 

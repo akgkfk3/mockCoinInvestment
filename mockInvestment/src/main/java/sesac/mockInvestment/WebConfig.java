@@ -2,6 +2,7 @@ package sesac.mockInvestment;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${spring.datasource.password}")
     private String password;
 
+    @Value("${minio.endpoint.url}")
+    private String minioUrl;
+
     @Bean
     public DataSource createDatasource() {
         // hikari Config 객체 생성
@@ -34,18 +38,17 @@ public class WebConfig implements WebMvcConfigurer {
         hikariConfig.setUsername(username);
         hikariConfig.setPassword(password);
         hikariConfig.setPoolName("sesacMySQL");
-        hikariConfig.setMaximumPoolSize(15);
+        hikariConfig.setMaximumPoolSize(50);
         hikariConfig.setAutoCommit(false);
         hikariConfig.setTransactionIsolation(String.valueOf(TRANSACTION_READ_COMMITTED));
 
         return new HikariDataSource(hikariConfig);
     }
 
-    /*@Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor())
-                .order(1)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/css");
-    }*/
+    @Bean
+    public MinioClient createMinioClient() {
+        return MinioClient.builder().endpoint(minioUrl)
+                .credentials("DUqZH7GmcQ9rll9bYBCY", "4DiuznrM4BhTpQbPWOJZFjnmnBkhMunadbjpmbaS")
+                .build();
+    }
 }

@@ -152,9 +152,9 @@
                 <div class="board-write">
                     <div class="table-container">
                         <div class="table-container-item">
-                            <h4 th:if="${category} == 'info'" class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>코인 정보 게시판</h4>
-                            <h4 th:if="${category} == 'news'" class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>코인 뉴스 게시판</h4>
-                            <h4 th:if="${category} == 'free'" class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>자유 게시판</h4>
+                            <h4 th:if="${board['category'] == 'info'}" class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>코인 정보 게시판</h4>
+                            <h4 th:if="${board['category'] == 'news'}" class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>코인 뉴스 게시판</h4>
+                            <h4 th:if="${board['category'] == 'free'}" class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>자유 게시판</h4>
                         </div>
                     </div>
                     <form method="post" th:action th:object="${board}" enctype="multipart/form-data">

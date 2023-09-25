@@ -3,6 +3,7 @@ package sesac.mockInvestment.test;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class test {
     public static void main(String[] args) {
@@ -17,6 +18,12 @@ public class test {
 
         // 포맷팅 현재 날짜/시간 출력
         System.out.println(formatedNow);  // 2021년 06월 17일 06시 43분 21초
+        System.out.println(formatedNow);  // 2021년 06월 17일 06시 43분 21초
+        System.out.println(formatedNow);  // 2021년 06월 17일 06시 43분 21초
+        System.out.println(formatedNow);  // 2021년 06월 17일 06시 43분 21초
+        System.out.println(formatedNow);  // 2021년 06월 17일 06시 43분 21초
+
+
 
     }
 }

@@ -73,7 +73,7 @@
 
     <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
       <div class="app-brand demo">
-        <a href="index.html" class="app-brand-link">
+        <a href="/" class="app-brand-link">
               <span class="app-brand-logo demo">
 
                 <img src="../assets/img/ssac.png" alt="새싹코인" width="30px;"/>
@@ -95,7 +95,7 @@
         </li>
         <!-- Dashboard -->
         <li class="menu-item">
-          <a href="index.html" class="menu-link">
+          <a href="/" class="menu-link">
             <i class="menu-icon tf-icons bx bx-home-circle"></i>
             <div data-i18n="Analytics">Main Page</div>
           </a>
@@ -146,8 +146,6 @@
 
     <!-- Layout container -->
     <div class="layout-page">
-
-
       <!-- Content wrapper -->
       <div class="content-wrapper">
         <!-- Content -->
@@ -178,66 +176,19 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>
-                      1
-                    </td>
-                    <td>
-                      테스트용 제목입니다.
-                    </td>
-                    <td>
-                      죠트리
-                    </td>
-                    <td>
-                      2023.09.12
-                    </td>
-                    <td>
-                      500
-                    </td>
-                    <td>
-                      10
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      1
-                    </td>
-                    <td>
-                      테스트용 제목입니다.
-                    </td>
-                    <td>
-                      죠트리
-                    </td>
-                    <td>
-                      2023.09.12
-                    </td>
-                    <td>
-                      500
-                    </td>
-                    <td>
-                      10
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      1
-                    </td>
-                    <td>
-                      테스트용 제목입니다.
-                    </td>
-                    <td>
-                      죠트리
-                    </td>
-                    <td>
-                      2023.09.12
-                    </td>
-                    <td>
-                      500
-                    </td>
-                    <td>
-                      10
-                    </td>
-                  </tr>
+                  <th:block th:if="${count > 0}">
+                    <tr th:each="board : ${boardList}">
+                      <td th:text="${board['boardNum']}"></td>
+<!--                      <td th:text="${board['title']}"><a></a></td>-->
+                      <td>
+                        <a th:text="${board['title']}" th:href="@{/detail/board(category=info, boardNum=${board['boardNum']})}"></a>
+                      </td>
+                      <td th:text="${board['author']}"></td>
+                      <td th:text="${board['registerDate']}"></td>
+                      <td th:text="${board['hit']}"></td>
+                      <td th:text="${board['recommand']}"></td>
+                    </tr>
+                  </th:block>
                   </tbody>
                 </table>
               </div>
@@ -251,38 +202,28 @@
         <!-- Basic Pagination -->
         <nav id="paging" aria-label="Page navigation">
           <ul class="pagination">
-            <li class="page-item first">
-              <a class="page-link" href="javascript:void(0);"
+            <li class="page-item first" th:if="${startPage > pageBlock}">
+              <a class="page-link" th:href="@{/boards(category=info, pageNumber=1)}"
               ><i class="tf-icon bx bx-chevrons-left"></i
               ></a>
             </li>
-            <li class="page-item prev">
-              <a class="page-link" href="javascript:void(0);"
+            <li class="page-item prev" th:if="${startPage > pageBlock}">
+              <a class="page-link" th:href="@{/boards(category=info, pageNumber=${startPage - pageBlock})}"
               ><i class="tf-icon bx bx-chevron-left"></i
               ></a>
             </li>
-            <li class="page-item">
-              <a class="page-link" href="javascript:void(0);">1</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="javascript:void(0);">2</a>
-            </li>
-            <li class="page-item active">
-              <a class="page-link" href="javascript:void(0);">3</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="javascript:void(0);">4</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="javascript:void(0);">5</a>
-            </li>
-            <li class="page-item next">
-              <a class="page-link" href="javascript:void(0);"
+            <th:block th:each="num : ${#numbers.sequence(startPage, endPage)}">
+              <li class="page-item" th:classappend="${pageNumber} == ${num} ? 'active' : ''">
+                <a class="page-link" th:href="@{/boards(category=info, pageNumber=${num})}">[[${num}]]</a>
+              </li>
+            </th:block>
+            <li class="page-item next" th:if="${endPage < pageCount}">
+              <a class="page-link" th:href="@{/boards(category=info, pageNumber=${startPage + pageBlock})}"
               ><i class="tf-icon bx bx-chevron-right"></i
               ></a>
             </li>
-            <li class="page-item last">
-              <a class="page-link" href="javascript:void(0);"
+            <li class="page-item last" th:if="${endPage < pageCount}">
+              <a class="page-link" th:href="@{/boards(category=info, pageNumber=${pageCount})}"
               ><i class="tf-icon bx bx-chevrons-right"></i
               ></a>
             </li>
