@@ -44,6 +44,7 @@ public class BoardController {
      */
     @GetMapping("/board")
     public String writeForm(@ModelAttribute("board") BoardFormDto boardDto, BindingResult bindingResult) {
+        // 카테고리가 없는 경우 (URL로 다이렉트로 접근한 경우)
         if (boardDto.getCategory() == null)
             boardDto.setCategory("free");
 
