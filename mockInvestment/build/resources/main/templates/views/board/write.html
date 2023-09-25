@@ -95,7 +95,7 @@
                 </li>
                 <!-- Dashboard -->
                 <li class="menu-item">
-                    <a href="index.html" class="menu-link">
+                    <a href="@{/}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Analytics">Main Page</div>
                     </a>
@@ -112,20 +112,20 @@
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">게시판</span>
                 </li>
-                <li class="menu-item">
-                    <a href="tables-basic1.html" class="menu-link">
+                <li class="menu-item" th:classappend="${board['category'] == 'info'} ? 'active' : ' '">
+                    <a href="" th:href="@{/boards(category=info)}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-detail"></i>
                         <div data-i18n="Account Settings">코인 정보</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="tables-basic2.html" class="menu-link">
+                <li class="menu-item" th:classappend="${board['category'] == 'news'} ? 'active' : ' '">
+                    <a href="" th:href="@{/boards(category=news)}" class="menu-link">
                         <i class="menu-icon tf-icons bx bxl-bitcoin"></i>
                         <div data-i18n="Authentications">코인 뉴스</div>
                     </a>
                 </li>
-                <li class="menu-item active">
-                    <a href="tables-basic3.html" class="menu-link">
+                <li class="menu-item" th:classappend="${board['category'] == 'free'} ? 'active' : ' '">
+                    <a href="" th:href="@{/boards(category=free)}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-cube-alt"></i>
                         <div data-i18n="Misc">자유게시판</div>
                     </a>
@@ -150,20 +150,29 @@
             <div class="content-wrapper">
                 <!-- Content -->
                 <div class="board-write">
-                    <form method="post">
+                    <div class="table-container">
+                        <div class="table-container-item">
+                            <h4 th:if="${category} == 'info'" class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>코인 정보 게시판</h4>
+                            <h4 th:if="${category} == 'news'" class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>코인 뉴스 게시판</h4>
+                            <h4 th:if="${category} == 'free'" class="fw-bold py-3 mb-4"><span class="text-muted fw-light"></span>자유 게시판</h4>
+                        </div>
+                    </div>
+                    <form method="post" th:action th:object="${board}" enctype="multipart/form-data">
                         <div class="input-group board-write-title">
                             <span class="input-group-text" id="basic-addon11">제목</span>
-                            <input type="text" class="form-control" placeholder="제목을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11">
+                            <input th:field="*{title}" name="title" type="text" class="form-control" placeholder="제목을 입력해주세요." aria-label="Username" aria-describedby="basic-addon11">
                         </div>
-                        <textarea id="summernote" name="editordata"></textarea>
+                        <span th:errors="*{title}" style="color:red;"></span>
+                        <textarea th:field="*{content}" id="summernote" name="content"></textarea>
                         <div class="input-group mt-4">
                             <label class="input-group-text" for="inputGroupFile01">Upload</label>
                             <input type="file" class="form-control" id="inputGroupFile01">
                         </div>
                         <div class="d-grid gap-2 col-lg-6 mx-auto mt-4">
-                            <button class="btn btn-primary btn-lg" type="button">등록</button>
+                            <button class="btn btn-primary btn-lg" type="submit">등록</button>
                             <button class="btn btn-secondary btn-lg" type="button">취소</button>
                         </div>
+<!--                        <input type="hidden" name="category" th:if="*{category == null}" th:value="free">-->
                     </form>
                 </div>
                 <!-- / Content -->
@@ -224,7 +233,7 @@
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
 
 
-<script>
+    <script>
       $(document).ready(function() {
         $('#summernote').summernote();
       });
