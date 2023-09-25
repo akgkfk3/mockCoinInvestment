@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import sesac.batchAndAlarm.domain.CoinDto;
+import sesac.batchAndAlarm.utils.JdbcUtil;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +21,8 @@ import java.util.List;
 public class JdbcCoinRepository implements CoinRepository {
 
     private final DataSource dataSource;
+
+    private final JdbcUtil jdbcUtil;
 
     /**
      * 파라미터로 CoinDto 타입의 List 파라미터를 받아 DB 테이블 (CoinList)에 Update 하는 메소드입니다.
@@ -61,9 +65,7 @@ public class JdbcCoinRepository implements CoinRepository {
                 pstmt.setString(7, coin.getName());
 
                 updateCheck += pstmt.executeUpdate();
-                pstmt.close();
             }
-
             // Update가 모두 성공하였을 시 commit 아니면 rollback 처리
             if (updateCheck == coinList.size()) {
                 conn.commit();
@@ -74,10 +76,13 @@ public class JdbcCoinRepository implements CoinRepository {
         } catch (SQLException ex) {
             log.info("SQL Exception Error!! {}", ex);
             try {
-                pstmt.close();
+                conn.rollback();
             } catch (SQLException e) {
-                log.info("pstmt.close() Error!! {}", e);
+                log.info("SQL Exception Error!! {}", ex);
             }
+        } finally {
+            jdbcUtil.close(pstmt);
+            jdbcUtil.close(conn);
         }
     }
 
@@ -118,17 +123,12 @@ public class JdbcCoinRepository implements CoinRepository {
                 coinList.add(coin);
             }
 
-            rs.close();
-            pstmt.close();
-
         } catch (SQLException ex) {
             log.info("SQL Exception Error!! {}", ex);
-            try {
-                rs.close();
-                pstmt.close();
-            } catch (SQLException e) {
-                log.info("SQL Exception Error!! {}", e);
-            }
+        } finally {
+            jdbcUtil.close(rs);
+            jdbcUtil.close(pstmt);
+            jdbcUtil.close(conn);
         }
         return coinList;
     }

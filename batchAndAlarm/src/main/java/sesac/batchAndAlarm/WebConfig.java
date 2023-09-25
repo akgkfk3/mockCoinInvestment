@@ -34,7 +34,7 @@ public class WebConfig {
         hikariConfig.setUsername(username);
         hikariConfig.setPassword(password);
         hikariConfig.setPoolName("sesacMySQL");
-        hikariConfig.setMaximumPoolSize(15);
+        hikariConfig.setMaximumPoolSize(20);
         hikariConfig.setAutoCommit(false);
         hikariConfig.setTransactionIsolation(String.valueOf(TRANSACTION_READ_COMMITTED));
 
