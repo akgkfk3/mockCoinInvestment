@@ -1,6 +1,6 @@
 package sesac.mockInvestment.repository;
 
-import sesac.mockInvestment.domain.LoginMemberFormDto;
+import sesac.mockInvestment.domain.EditMemberFormDto;
 import sesac.mockInvestment.domain.MemberDto;
 import sesac.mockInvestment.domain.RegisterMemberFormDto;
 
@@ -9,18 +9,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 
 public interface MemberDao {
 
-    MemberDto findById(String id) throws SQLException;
-    ArrayList<MemberDto> findAll() throws SQLException;
+    MemberDto findById(String id);
+    ArrayList<MemberDto> findAll();
 
-    int save(RegisterMemberFormDto memberDto) throws SQLException;
-    int delete(String id) throws SQLException;
+    int save(RegisterMemberFormDto memberDto);
+    int update(String id, EditMemberFormDto memberDto);
+    int delete(String id);
 
-    void close(Connection conn, Statement stmt, ResultSet resultSet);
+    void close(Statement stmt, ResultSet resultSet);
 
 }

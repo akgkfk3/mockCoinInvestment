@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import sesac.mockInvestment.domain.DeleteMemberFormDto;
+import sesac.mockInvestment.domain.EditMemberFormDto;
 import sesac.mockInvestment.domain.MemberDto;
 import sesac.mockInvestment.domain.RegisterMemberFormDto;
 import sesac.mockInvestment.repository.MemberDao;
@@ -19,28 +21,9 @@ public class MemberServiceImp implements MemberService {
     private final MemberDao memberDao;
     private String result;
 
-
-//    @Override
-//    public Optional<LoginMemberFormDto> selectById(LoginMemberFormDto LoginMemberFormDto) throws SQLException {
-//        Optional<sesac.mockInvestment.domain.LoginMemberFormDto> result = memberDao.selectById(String.valueOf(LoginMemberFormDto));
-//        return result;
-//    }
-
     @Override
     public Optional<MemberDto> selectById(String memberId) throws SQLException {
 
-
-//        MemberDto result = memberDao.selectById(memberId);
-//        if (result != null) {
-//            MemberDto memberDto = new MemberDto();
-//            memberDto.setId(memberDto.getId());
-//            memberDto.setPassword(memberDto.getPassword());
-//            // 필요한 다른 정보도 매핑
-//
-//            return memberDto;
-//        } else {
-//            return null; // 회원이 존재하지 않을 경우 null 반환
-//        }
         return null;
     }
 
@@ -67,20 +50,42 @@ public class MemberServiceImp implements MemberService {
     }
 
     @Override
-    public MemberDto login(String id, String password) throws SQLException {
+    public String update(EditMemberFormDto memberDto) {
+
+
+        int result = memberDao.update(memberDto.getId(), memberDto);
+
+        if(result>=1){
+            this.result = "업데이트 성공";
+
+        }else{
+            this.result ="업데이트 실패";
+        }
+
+        return this.result;
+    }
+
+    @Override
+    public String delete(DeleteMemberFormDto memberDto) {
+//        MemberDto memberDto1 = memberDao.findById(memberDto.getId());
+        int result = memberDao.delete(memberDto.getId());
+
+        if(result>=1){
+            this.result = "삭제 완료";
+        }else {
+            this.result = "삭제 실패";
+        }
+
+        return null;
+    }
+
+
+    @Override
+    public MemberDto login(String id, String password)  {
 
         MemberDto memberDto = memberDao.findById(id);
-//
-//        String rawPassword = password; // 사용자로부터 입력 받은 패스워드
-//
-//        // PasswordEncoder를 생성 (Bcrypt 사용)
+
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//
-//        // 랜덤 솔트와 함께 패스워드 해싱
-//        String hashedPassword = passwordEncoder.encode(rawPassword);
-//
-//        // 해싱된 패스워드 출력
-//        System.out.println("해싱된 패스워드: " + hashedPassword);
 
         // 패스워드 검증 예제
         boolean passwordMatches = passwordEncoder.matches(password, memberDto.getPassword());
@@ -93,9 +98,6 @@ public class MemberServiceImp implements MemberService {
         }
 
         return memberDto;
-//        return memberDao.findById(id)
-//                .filter(m -> m.getPassword().equals(hashedPassword))
-//                .orElse(null);
     }
 
     @Override

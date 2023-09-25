@@ -9,6 +9,7 @@ import sesac.mockInvestment.domain.LoginMemberFormDto;
 import sesac.mockInvestment.domain.MemberDto;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
@@ -24,7 +25,9 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String homeLoginArgumentResolver(@Login LoginMemberFormDto LoginMemberFormDto, Model model) {
+    public String homeLoginArgumentResolver(@Login LoginMemberFormDto LoginMemberFormDto, Model model, HttpSession session) {
+//        String deleteMessage = (String) session.getAttribute("deleteMessage");
+//        model.addAttribute("deleteMessage", deleteMessage);
 
         return "index";
     }

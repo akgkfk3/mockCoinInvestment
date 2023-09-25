@@ -56,10 +56,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginCheckInterceptor())
-                .order(1)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/", "/login", "css/**", "/*.ico", "/error", "/member","/mypage");
+//        registry.addInterceptor(new LoginCheckInterceptor())
+//                .order(1)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/", "/login", "css/**", "/*.ico", "assets/*", "img/*", "/error", "/member","/mypage", "/editMember", "/deleteMember");
 
 
 

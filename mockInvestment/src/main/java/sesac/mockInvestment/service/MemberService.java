@@ -1,8 +1,6 @@
 package sesac.mockInvestment.service;
 
-import sesac.mockInvestment.domain.LoginMemberFormDto;
-import sesac.mockInvestment.domain.MemberDto;
-import sesac.mockInvestment.domain.RegisterMemberFormDto;
+import sesac.mockInvestment.domain.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,7 +16,11 @@ public interface MemberService {
     List<MemberDto> selectAll() throws SQLException;
     String save(RegisterMemberFormDto memberDto) throws SQLException;
 
-    MemberDto login(String id, String password) throws SQLException;
+    String update(EditMemberFormDto memberDto);
+
+    String delete(DeleteMemberFormDto memberDto);
+
+    MemberDto login(String id, String password);
 
     boolean isIdDuplicated(String id) throws SQLException;
 }

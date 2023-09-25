@@ -4,19 +4,25 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public class RegisterMemberFormDto {
+public class EditMemberFormDto {
 
 
-    @NotNull(message = "ID는 null일 수 없습니다.")
-    @Pattern(regexp = "^[a-zA-Z0-9]{2,10}$", message = "ID는 최소2자에서 10자까지 허용되며, 알파벳 대문자, 소문자, 숫자만 허용됩니다.")
+//    @NotNull(message = "ID는 null일 수 없습니다.")
+//    @Pattern(regexp = "^[a-zA-Z0-9]{2,10}$", message = "ID는 최소2자에서 10자까지 허용되며, 알파벳 대문자, 소문자, 숫자만 허용됩니다.")
     private String id;
+
+    private String oriPassword;
 
     @NotNull(message = "비밀번호는 null일 수 없습니다.")
     @NotBlank(message = "비밀번호는 공백일 수 없습니다.")
@@ -38,11 +44,8 @@ public class RegisterMemberFormDto {
     @Pattern(regexp = "^(19\\d{2}|[2-9]\\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$", message = "ex) 1990-03-03 형식으로 작성해주세요.")
     private String birthDate;
 
-//    @NotNull(message = "성별을 골라주세요. (Male, Female)")
-//    private String gender;
-
     @NotNull(message = "성별을 골라주세요. (Male, Female)")
-    private GenderType gender;
+    private String gender;
 
     @NotNull(message = "폰 번호를 010-1234-4567 형식으로 적어주세요.")
     @Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$", message = "ex) 010-1111-2222 형식으로 작성해주세요.")

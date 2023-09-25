@@ -106,7 +106,7 @@
                             th:field="*{password1}"
                             type="password"
                             class="form-control"
-                            placeholder="소문자, 대문자, 특수문자, 숫자를 포함한 4~18자 사이를 포함해주세요."
+                            placeholder="비밀번호를 입력해주세요"
                             aria-describedby="password1"
                     />
                     <span class="input-group-text cursor-pointer" th:classappend="${#fields.hasErrors('password1')} ? 'field-error' : ''"><i class="bx bx-hide"></i></span>
@@ -124,7 +124,7 @@
                                 th:field="*{password2}"
                                 type="password"
                                 class="form-control"
-                                placeholder="소문자, 대문자, 특수문자, 숫자를 포함한 4~18자 사이를 포함해주세요."
+                                placeholder="비밀번호를 입력해주세요"
                                 aria-describedby="password2"
                         />
                         <span class="input-group-text cursor-pointer" th:classappend="${#fields.hasErrors('password2')} ? 'field-error' : ''"><i class="bx bx-hide"></i></span>
@@ -152,12 +152,10 @@
 
                 <div class="mb-3">
 <!--                  <div class="form-check">-->
-                    <label class="form-label" for="gender-male">
-                      GENDER
-                    </label>
-                    <input class="form-radio-input" type="radio" id="gender-male" value="m" name="gender"  th:errorclass="field-error"/> <label class="form-radio-label" for="gender-male">Male</label>
-                    <input class="form-radio-input" type="radio" id="gender-female" value="f" name="gender"  th:errorclass="field-error"/> <label class="form-radio-label" for="gender-female">Female</label>
-
+                    <span class="form-label">GENDER</span>
+                    <span th:each="type : ${gender}">
+                        <input class="form-radio-input" type="radio" th:field="*{gender}" th:value="${type.name()}"  th:errorclass="field-error"/> <label class="form-radio-label" th:for="${#ids.prev('gender')}" th:text="${type.description}"></label>
+                    </span>
                     <div class="field-error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" th:errorclass="field-error">
                         성별 오류입니다.
                     </div>
@@ -178,18 +176,6 @@
                         이메일 주소 입력 오류입니다.
                     </div>
                 </div>
-
-
-
-<!--                <div class="mb-3">-->
-<!--                  <div class="form-check">-->
-<!--                    <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />-->
-<!--                    <label class="form-check-label" for="terms-conditions">-->
-
-<!--                      <a href="javascript:void(0);">개인 약관 및 정책에 동의합니다.</a>-->
-<!--                    </label>-->
-<!--                  </div>-->
-<!--                </div>-->
                 <button type="submit" class="btn btn-primary d-grid w-100">회원가입 하기</button>
               </form>
 

@@ -38,32 +38,24 @@ public class LoginController {
 
 
 @PostMapping("/login")
-public String login(@Validated @ModelAttribute LoginMemberFormDto loginMemberFormDto, BindingResult bindingResult,
-//                      @RequestParam(defaultValue = "/") String redirectURL,
-                      HttpServletRequest request, Model model) {
+public String login(@Validated @ModelAttribute LoginMemberFormDto loginMemberFormDto, BindingResult bindingResult, HttpServletRequest request, Model model) {
     if (bindingResult.hasErrors()) {
         return "login/loginForm";
     }
 
     MemberDto loginMember = null;
-    try {
-        loginMember = memberService.login(loginMemberFormDto.getId(), loginMemberFormDto.getPassword());
-        if(loginMember == null){
-            return "login/loginForm";
-        }
-        //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
-        HttpSession session = request.getSession();
-        //세션에 로그인 회원 정보 보관
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-        System.out.println("userName찾기"+loginMember.getName());
-        session.setAttribute("loggedInUserName", loginMember.getName());
-        return "index";
-
-    } catch (SQLException e) {
-        e.getStackTrace();
-        bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+    loginMember = memberService.login(loginMemberFormDto.getId(), loginMemberFormDto.getPassword());
+    if(loginMember == null){
         return "login/loginForm";
     }
+    //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
+    HttpSession session = request.getSession();
+    //세션에 로그인 회원 정보 보관
+    session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+    System.out.println("userName찾기"+loginMember.getName());
+    session.setAttribute("loggedInUserName", loginMember.getName());
+
+    return "index";
 
 }
 
