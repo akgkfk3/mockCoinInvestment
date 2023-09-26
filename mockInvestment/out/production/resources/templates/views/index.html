@@ -16,6 +16,7 @@
   lang="en"
   class="light-style layout-menu-fixed"
   dir="ltr"
+  xmlns:th="http://www.thymeleaf.org"
   data-theme="theme-default"
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
@@ -27,7 +28,7 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>새싹코인 Main Home</title>
 
     <meta name="description" content="" />
 
@@ -118,6 +119,8 @@
         setUpbitData();
       });
       </script>
+      // 아이디 삭제시 알림
+
   </head>
 
   <body>
@@ -144,9 +147,13 @@
           <div class="menu-inner-shadow"></div>
 
           <ul class="menu-inner py-1">
-            <li class="menu-item text-end mb-4 mt-4">
+            <li class="menu-item text-end mb-4 mt-4" th:if="${session['loginMember'] == null}">
               <a href="/login" title="로그인" class="text-secondary">로그인</a>
               <a href="/member" title="회원가입" class="mx-2 text-secondary">회원가입</a>
+            </li>
+            <li class="menu-item text-end mb-4 mt-4" th:if="${session['loginMember'] != null}">
+              <a href="/logout" title="로그아웃" class="text-secondary mx-2">로그아웃</a><br/>
+              <span th:text="${session['loggedInUserName']}+ ' 님 환영합니다.'" class="mx-2 text-secondary">환영합니다.</span>
             </li>
             <!-- Dashboard -->
             <li class="menu-item active">
@@ -158,7 +165,7 @@
 
             <!-- Layouts -->
             <li class="menu-item py-1">
-              <a href="layouts-fluid.html" class="menu-link">
+              <a href="/mypage" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">My Page</div>
               </a>

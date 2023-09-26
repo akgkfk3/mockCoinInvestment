@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<!-- =========================================================
+* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
+==============================================================
+
+* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
+* Created by: ThemeSelection
+* License: You must have a valid license purchased in order to legally use the theme for your project.
+* Copyright ThemeSelection (https://themeselection.com)
+
+=========================================================
+ -->
+<!-- beautify ignore:start -->
+<html
+        lang="en"
+        class="light-style layout-menu-fixed"
+        dir="ltr"
+        data-theme="theme-default"
+        data-assets-path="../assets/"
+        data-template="vertical-menu-template-free"
+        xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="utf-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>Tables - Basic Tables | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/img/ssac.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/css/sesac.css" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="../assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="../assets/js/config.js"></script>
+</head>
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Menu -->
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <div class="app-brand demo">
+                <a href="index.html" class="app-brand-link">
+              <span class="app-brand-logo demo">
+
+                <img src="../assets/img/ssac.png" alt="새싹코인" width="30px;"/>
+              </span>
+                    <span class="app-brand-text demo menu-text fw-bolder ms-2">새싹 코인</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+
+            <div class="menu-inner-shadow"></div>
+
+            <ul class="menu-inner py-1">
+                <li class="menu-item text-end mb-4 mt-4">
+                    <a href="auth-login-basic.html" title="로그인" class="text-secondary">로그인</a>
+                    <a href="auth-register-basic.html" title="회원가입" class="mx-2 text-secondary">회원가입</a>
+                </li>
+                <!-- Dashboard -->
+                <li class="menu-item">
+                    <a href="@{/}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Analytics">Main Page</div>
+                    </a>
+                </li>
+
+                <!-- Layouts -->
+                <li class="menu-item py-1">
+                    <a href="layouts-fluid.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-layout"></i>
+                        <div data-i18n="Layouts">My Page</div>
+                    </a>
+                </li>
+
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">게시판</span>
+                </li>
+                <li class="menu-item" th:classappend="${board['category'] == 'info'} ? 'active' : ' '">
+                    <a href="" th:href="@{/boards(category=info)}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-detail"></i>
+                        <div data-i18n="Account Settings">코인 정보</div>
+                    </a>
+                </li>
+                <li class="menu-item" th:classappend="${board['category'] == 'news'} ? 'active' : ' '">
+                    <a href="" th:href="@{/boards(category=news)}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bxl-bitcoin"></i>
+                        <div data-i18n="Authentications">코인 뉴스</div>
+                    </a>
+                </li>
+                <li class="menu-item" th:classappend="${board['category'] == 'free'} ? 'active' : ' '">
+                    <a href="" th:href="@{/boards(category=free)}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+                        <div data-i18n="Misc">자유게시판</div>
+                    </a>
+                </li>
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">관리자</span>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-crown"></i>
+                        <div data-i18n="Misc">관리자 페이지</div>
+                    </a>
+                </li>
+
+            </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Content -->
+                <div id="board">
+
+                    <!-- Board Header -->
+                    <div id="board-header">
+                        <!-- Title -->
+                        <div style="border-bottom: 1px solid #d9dee3">
+                            <h3 id="board-title" th:text="${board['title']}">제목</h3>
+                        </div>
+                        <!-- Author -->
+                        <div class="board-header-container">
+                            <div class="board-header-item board-author-container">
+                                <div class="board-author-item">
+                                    <span th:text="${board['author']}">비트떡상가즈아</span>
+                                </div>
+                                <div class="board-author-item">
+                                    <span>추천수</span>
+                                    <span th:text="${board['recommand']}">50</span>
+                                </div>
+                                <div class="board-author-item">
+                                    <span>댓글</span>
+                                    <span>50</span>
+                                </div>
+                            </div>
+                            <div class="board-header-item board-author-container">
+                                <div class="board-author-item">
+                                    <span th:text="${board['registerDate']}">2023.09.21</span>
+                                </div>
+                                <div class="board-author-item">
+                                    <span>조회 수</span>
+                                    <span th:text="${board['hit']}">66</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Board Body-->
+                    <div id="board-body">
+                        <!-- Text -->
+                        <div id="board-body-Content">
+                            [(${board['content']})]
+                        </div>
+
+
+                        <!-- Recommand -->
+                        <div id="recommand" class="mt-2">
+                            <button id="recommandButton" type="button" class="btn btn-info">
+                                추천 수
+                                <span>50</span>
+                            </button>
+                        </div>
+                        <!-- Download -->
+                        <div th:if="${board['originalFileName'] != null}">
+                            <span class="m-lg-2">[파일 다운로드]</span>
+                            <a th:href="@{/download/{path}(path=${board['serverFileName']})}" th:text="${board['originalFileName']}"></a>
+                        </div>
+                    </div>
+
+                    <!-- Board Comment -->
+                    <div id="board-comment">
+                        <div class="input-group mt-3">
+                            <span class="input-group-text">댓글</span>
+                            <textarea class="form-control" aria-label="With textarea" placeholder="Comment"></textarea>
+                            <button type="button" class="btn btn-primary">등록</button>
+                        </div>
+                        <hr>
+
+                        <div class="board-comment-reply">
+                            <!-- comment -->
+                            <div class="comment-container">
+                                <div class="comment-container-item-span">
+                                    <span>죠트리</span>
+                                </div>
+                                <div class="comment-container-item-p">
+                                    <p>댓글 테스트 용도입니다.</p>
+                                </div>
+                            </div>
+
+                            <!-- reply -->
+                            <div class="board-reply">
+                                <div class="reply-container">
+                                    <div class="reply-container-item-span">
+                                        <span>죠트리</span>
+                                    </div>
+                                    <div class="reply-container-item-p">
+                                        <p>대댓글</p>
+                                    </div>
+                                </div>
+                                <div class="reply-container">
+                                    <div class="reply-container-item-span">
+                                        <span>죠트리</span>
+                                    </div>
+                                    <div class="reply-container-item-p">
+                                        <p>대댓글</p>
+                                    </div>
+                                </div>
+                                <div class="reply-container">
+                                    <div class="reply-container-item-span">
+                                        <span>죠트리</span>
+                                    </div>
+                                    <div class="reply-container-item-p">
+                                        <p>대댓글</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="comment-container">
+                                <div class="comment-container-item-span">
+                                    <span>죠트리</span>
+                                </div>
+                                <div class="comment-container-item-p">
+                                    <p>댓글 테스트 용도입니다.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Basic Pagination -->
+                <nav id="paging" aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item first">
+                            <a class="page-link" href="javascript:void(0);"
+                            ><i class="tf-icon bx bx-chevrons-left"></i
+                            ></a>
+                        </li>
+                        <li class="page-item prev">
+                            <a class="page-link" href="javascript:void(0);"
+                            ><i class="tf-icon bx bx-chevron-left"></i
+                            ></a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:void(0);">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:void(0);">2</a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link" href="javascript:void(0);">3</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:void(0);">4</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="javascript:void(0);">5</a>
+                        </li>
+                        <li class="page-item next">
+                            <a class="page-link" href="javascript:void(0);"
+                            ><i class="tf-icon bx bx-chevron-right"></i
+                            ></a>
+                        </li>
+                        <li class="page-item last">
+                            <a class="page-link" href="javascript:void(0);"
+                            ><i class="tf-icon bx bx-chevrons-right"></i
+                            ></a>
+                        </li>
+                    </ul>
+                </nav>
+                <!--/ Basic Pagination -->
+
+
+
+                <!-- / Content -->
+
+                <div class="content-backdrop fade"></div>
+            </div>
+            <!-- Content wrapper -->
+            <!-- Footer -->
+            <footer class="content-footer footer bg-footer-theme flex-column">
+                <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                    <div class="mb-2 mb-md-0">
+                        ©
+                        <script>
+                  document.write(new Date().getFullYear());
+                </script>
+                        , Sesac 백엔드과정 <b class="text-primary">새싹 코인</b> 프로젝트
+                        <!-- <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a> -->
+                    </div>
+
+                </div>
+            </footer>
+            <!-- / Footer -->
+        </div>
+        <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../assets/vendor/libs/popper/popper.js"></script>
+<script src="../assets/vendor/js/bootstrap.js"></script>
+<script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="../assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+
+<!-- Main JS -->
+<script src="../assets/js/main.js"></script>
+
+<!-- Axios Library -->
+<script src='https://unpkg.com/axios/dist/axios.min.js'></script>
+
+<script>
+      const recommandButton = document.getElementById("recommandButton");
+      recommandButton.addEventListener("click", () => {
+
+        const Url = "http://localhost:8080/recommand/18";
+
+        axios
+         .get(Url)
+         .then((data) => console.log(data))
+         .catch((err) => alert(err));
+
+        alert('hi');
+<!--        location.href="/board?category=info";-->
+      });
+</script>
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>
