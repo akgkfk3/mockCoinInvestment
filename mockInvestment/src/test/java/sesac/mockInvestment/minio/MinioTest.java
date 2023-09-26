@@ -3,6 +3,12 @@ package sesac.mockInvestment.minio;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.messages.Item;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StreamUtils;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,14 +19,30 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 
 // https://min.io/docs/minio/linux/developers/java/API.html 도큐먼트 문서
+
+@SpringBootTest
 public class MinioTest {
+
+    @Autowired
+    public static MinioClient minioClient;
+
+    @Test
+    public void test() throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket("test").build());
+
+        if (found) {
+            System.out.println("존재");
+        } else {
+            System.out.println("미존재");
+        }
+    }
 
     public static void main(String[] args) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
 
         // 1. 접속
-        MinioClient minioClient = MinioClient.builder().endpoint("http:infra.shucloud.site:33338")
-                .credentials("DUqZH7GmcQ9rll9bYBCY", "4DiuznrM4BhTpQbPWOJZFjnmnBkhMunadbjpmbaS")
-                .build();
+//        MinioClient minioClient = MinioClient.builder().endpoint("http://infra.shucloud.site:33338")
+//                .credentials("DUqZH7GmcQ9rll9bYBCY", "4DiuznrM4BhTpQbPWOJZFjnmnBkhMunadbjpmbaS")
+//                .build();
 
         // 2. 버킷 유무 판단
         boolean found = minioClient.bucketExists(BucketExistsArgs.builder().bucket("test").build());
@@ -46,12 +68,12 @@ public class MinioTest {
                 UploadObjectArgs.builder()
                         .bucket("test")
                         .object("test.txt")
-                        .filename("C:\\Users\\sHu\\Desktop\\mockInvestment\\src\\main\\java\\sesac\\mockInvestment\\test.txt")
+                        .filename("C:\\Users\\user\\Desktop\\mockInvestment\\src\\main\\java\\sesac\\mockInvestment\\test.txt")
                         .build()
         );
 
         // 4-2. 파일 업로드 (바이너리)
-        InputStream is = new FileInputStream("C:\\Users\\sHu\\Desktop\\mockInvestment\\src\\main\\java\\sesac\\mockInvestment\\test.txt");
+        InputStream is = new FileInputStream("C:\\Users\\user\\Desktop\\mockInvestment\\src\\main\\java\\sesac\\mockInvestment\\test.txt");
         minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket("test")

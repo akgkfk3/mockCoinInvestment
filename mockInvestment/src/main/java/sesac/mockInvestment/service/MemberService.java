@@ -1,5 +1,6 @@
 package sesac.mockInvestment.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import sesac.mockInvestment.domain.*;
 
 import java.sql.SQLException;
@@ -19,6 +20,8 @@ public interface MemberService {
     String update(EditMemberFormDto memberDto);
 
     String delete(DeleteMemberFormDto memberDto);
+
+    void uploadFile(String bucketName, String objectName, MultipartFile file);
 
     MemberDto login(String id, String password);
 

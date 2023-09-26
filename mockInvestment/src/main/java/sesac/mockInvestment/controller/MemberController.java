@@ -1,7 +1,9 @@
 package sesac.mockInvestment.controller;
 
+import io.minio.MinioClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import sesac.mockInvestment.argumentresolver.Login;
 import sesac.mockInvestment.domain.*;
 import sesac.mockInvestment.service.MemberService;
@@ -17,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,7 +33,7 @@ public class MemberController {
 
     @ModelAttribute("gender")
     public GenderType[] gender() {
-        System.out.println("GenderType"+Arrays.toString(GenderType.values()));
+        System.out.println("gender"+Arrays.toString(GenderType.values()));
         return GenderType.values();
     }
 
@@ -120,6 +125,7 @@ public class MemberController {
         return "member/editMember";
     }
 
+
     @PostMapping("/deleteMember")
     public String deleteMemberPost(@ModelAttribute DeleteMemberFormDto deleteMemberFormDto,BindingResult bindingResult, @SessionAttribute("loginMember") MemberDto loginMember, Model model, HttpServletRequest request) {
 
@@ -148,3 +154,46 @@ public class MemberController {
         return "index";
     }
 }
+
+
+
+//@RestController
+//public class FileUploadController {
+//    private final MinioClient minioService;
+//
+//    @Autowired
+//    public FileUploadController(MinioClient minioService) {
+//        this.minioService = minioService;
+//    }
+//
+//    @PostMapping("/uploadProfile")
+//    public Map<String, Object> uploadProfileImage(
+//            @RequestParam("file") MultipartFile file
+//    ) {
+//        Map<String, Object> response = new HashMap<>();
+//
+//        if (file.isEmpty()) {
+//            response.put("success", false);
+//            response.put("message", "파일이 비어 있습니다.");
+//            return response;
+//        }
+//
+//        try {
+//            // 파일 업로드
+//            String bucketName = "your-bucket-name"; // 업로드할 버킷 이름
+//            String objectName = "path/to/uploaded/image.jpg"; // 업로드할 객체 경로
+//
+//            minioService.uploadFile(bucketName, objectName, file);
+//
+//            response.put("success", true);
+//            response.put("message", "파일이 업로드되었습니다.");
+//            response.put("imageUrl", minioService.getObjectUrl(bucketName, objectName)); // 업로드된 파일의 URL을 반환
+//
+//        } catch (Exception e) {
+//            response.put("success", false);
+//            response.put("message", "파일 업로드에 실패했습니다.");
+//        }
+//
+//        return response;
+//    }
+//}

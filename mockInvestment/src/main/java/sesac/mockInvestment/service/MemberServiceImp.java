@@ -1,15 +1,20 @@
 package sesac.mockInvestment.service;
 
+import io.minio.MinioClient;
+import io.minio.ObjectWriteResponse;
+import jdk.internal.misc.Unsafe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import sesac.mockInvestment.domain.DeleteMemberFormDto;
 import sesac.mockInvestment.domain.EditMemberFormDto;
 import sesac.mockInvestment.domain.MemberDto;
 import sesac.mockInvestment.domain.RegisterMemberFormDto;
 import sesac.mockInvestment.repository.MemberDao;
 
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +24,7 @@ import java.util.Optional;
 public class MemberServiceImp implements MemberService {
 
     private final MemberDao memberDao;
+    private final MinioClient minioClient;
     private String result;
 
     @Override
@@ -106,5 +112,14 @@ public class MemberServiceImp implements MemberService {
         MemberDto existingMember = memberDao.findById(id);
         // 중복되지 않으면 existingMember는 null이며, 중복되면 existingMember에 값이 채워집니다.
         return existingMember != null;
+    }
+
+    public void uploadFile(String bucketName, String objectName, MultipartFile file) {
+//        try (InputStream inputStream = file.getInputStream()) {
+//
+//            minioClient.putObject(bucketName, objectName, inputStream, file.getSize(), file.getContentType())
+//        } catch (Exception e) {
+//            throw new RuntimeException("파일 업로드에 실패했습니다.", e);
+//        }
     }
 }

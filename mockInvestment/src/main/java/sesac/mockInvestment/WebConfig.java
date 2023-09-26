@@ -2,6 +2,7 @@ package sesac.mockInvestment;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +31,15 @@ public class WebConfig implements WebMvcConfigurer {
     private String username;
     @Value("${spring.datasource.password}")
     private String password;
+
+    @Value("${minio.endpoint")
+    private String minioUrl;
+
+    @Value("${minio.accessKey}")
+    private String accessKey;
+
+    @Value("${minio.secretKey}")
+    private String secretKey;
 
     @Bean
     public DataSource createDatasource() {
@@ -76,12 +86,10 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
 
-
-    /*@Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor())
-                .order(1)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/css");
-    }*/
+    @Bean
+    public MinioClient setMinioClient() {
+        return MinioClient.builder().endpoint(minioUrl)
+            .credentials(accessKey, secretKey)
+            .build();
+    }
 }
