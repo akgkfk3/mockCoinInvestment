@@ -87,10 +87,4 @@ public class WebConfig implements WebMvcConfigurer {
 //                .addPathPatterns("/**") // 모든 경로에 인터셉터 적용
 //                .excludePathPatterns("/", "/logout", "css/**", "/*.ico", "/error", "/mypage");
     }
-    @Bean
-    public MinioClient setMinioClient() {
-        return MinioClient.builder().endpoint(minioUrl)
-            .credentials(accessKey, secretKey)
-            .build();
-    }
 }
