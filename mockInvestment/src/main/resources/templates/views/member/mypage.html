@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        class="light-style layout-menu-fixed"
+        dir="ltr"
+        xmlns:th="http://www.thymeleaf.org"
+        data-theme="theme-default"
+        data-assets-path="../assets/"
+        data-template="vertical-menu-template-free"
+>
+<head>
+    <meta charset="utf-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>MyPage</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/img/ssac.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+            rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="../assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="../assets/js/config.js"></script>
+</head>
+
+<body>
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Menu -->
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <div class="app-brand demo">
+                <a href="/" class="app-brand-link">
+              <span class="app-brand-logo demo">
+
+                <img src="../assets/img/ssac.png" alt="새싹코인" width="30px;"/>
+              </span>
+                    <span class="app-brand-text demo menu-text fw-bolder ms-2">새싹 코인</span>
+                </a>
+
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+                    <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                </a>
+            </div>
+
+            <div class="menu-inner-shadow"></div>
+
+            <ul class="menu-inner py-1">
+                <li class="menu-item text-end mb-4 mt-4" th:if="${session['loginMember'] == null}">
+                    <a href="/login" title="로그인" class="text-secondary">로그인</a>
+                    <a href="/member" title="회원가입" class="mx-2 text-secondary">회원가입</a>
+                </li>
+                <li class="menu-item text-end mb-4 mt-4" th:if="${session['loginMember'] != null}">
+                    <a href="/logout" title="로그아웃" class="text-secondary mx-2">로그아웃</a><br/>
+                    <span th:text="${session['loggedInUserName']}+ ' 님 환영합니다.'" class="mx-2 text-secondary">환영합니다.</span>
+                </li>
+                <!-- Dashboard -->
+                <li class="menu-item">
+                    <a href="/" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                        <div data-i18n="Analytics">Main Page</div>
+                    </a>
+                </li>
+
+                <!-- Layouts -->
+                <li class="menu-item py-1 active">
+                    <a href="/mypage" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-layout"></i>
+                        <div data-i18n="Layouts">My Page</div>
+                    </a>
+                </li>
+
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">게시판</span>
+                </li>
+                <li class="menu-item">
+                    <a href="tables-basic1.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-detail"></i>
+                        <div data-i18n="Account Settings">코인 정보</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tables-basic2.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bxl-bitcoin"></i>
+                        <div data-i18n="Authentications">코인 뉴스</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="tables-basic3.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-cube-alt"></i>
+                        <div data-i18n="Misc">자유게시판</div>
+                    </a>
+                </li>
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">관리자</span>
+                </li>
+                <li class="menu-item">
+                    <a href="admin.html" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-crown"></i>
+                        <div data-i18n="Misc">관리자 페이지</div>
+                    </a>
+                </li>
+
+            </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+
+
+            <!-- Content wrapper -->
+            <div class="content-wrapper">
+                <!-- Content -->
+
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <h4 class="fw-bold py-3 mb-4">My Page</h4>
+
+                    <!-- Collapse -->
+                    <h5>회원 정보</h5>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <h5 class="card-header">회원정보를 수정/삭제 할 수 있습니다.</h5>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        회원 정보 수정 및 탈퇴하기를 을 원하시면 회원정보 수정하기 버튼을 눌러주세요.
+                                    </p>
+                                    <p class="demo-inline-spacing">
+                                        <a
+                                                class="btn btn-primary me-1"
+                                                href="/editMember"
+                                                role="button"
+                                        >
+                                           회원정보 수정하기
+                                        </a>
+
+
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5 class="mt-2">내 코인 정보</h5>
+                        <div class="col-12">
+                            <div class="card">
+                                <h5 class="card-header">코인 정보</h5>
+                                <div class="card-body">
+                                    <p class="card-text">아래 코인 정보를 확인해주세요.</p>
+
+                                    <p class="demo-inline-spacing">
+                                        <a
+                                                class="btn btn-primary me-1"
+                                                data-bs-toggle="collapse"
+                                                href="#multiCollapseExample1"
+                                                role="button"
+                                                aria-expanded="false"
+                                                aria-controls="multiCollapseExample1"
+                                        >버튼1</a
+                                        >
+                                        <button
+                                                class="btn btn-primary me-1"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#multiCollapseExample2"
+                                                aria-expanded="false"
+                                                aria-controls="multiCollapseExample2"
+                                        >
+                                            버튼2
+                                        </button>
+                                        <button
+                                                class="btn btn-primary me-1"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target=".multi-collapse"
+                                                aria-expanded="false"
+                                                aria-controls="multiCollapseExample1 multiCollapseExample2"
+                                        >
+                                           버튼3
+                                        </button>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- / Content -->
+
+                <!-- Footer -->
+                <footer class="content-footer footer bg-footer-theme flex-column">
+                    <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                        <div class="mb-2 mb-md-0">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script>
+                            , Sesac 백엔드과정 <b class="text-primary">새싹 코인</b> 프로젝트
+                            <!-- <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a> -->
+                        </div>
+
+                    </div>
+                </footer>
+                <!-- / Footer -->
+
+                <div class="content-backdrop fade"></div>
+            </div>
+            <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
+</div>
+<!-- / Layout wrapper -->
+
+<!-- Core JS -->
+<!-- build:js assets/vendor/js/core.js -->
+<script src="../assets/vendor/libs/jquery/jquery.js"></script>
+<script src="../assets/vendor/libs/popper/popper.js"></script>
+<script src="../assets/vendor/js/bootstrap.js"></script>
+<script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+<script src="../assets/vendor/js/menu.js"></script>
+<!-- endbuild -->
+
+<!-- Vendors JS -->
+
+<!-- Main JS -->
+<script src="../assets/js/main.js"></script>
+
+<!-- Page JS -->
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>

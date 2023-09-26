@@ -6,9 +6,12 @@ import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
+import sesac.mockInvestment.argumentresolver.LoginMemberArgumentResolver;
 import javax.sql.DataSource;
+import java.util.List;
 
 import static com.zaxxer.hikari.util.IsolationLevel.TRANSACTION_READ_COMMITTED;
 
@@ -26,6 +29,12 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Value("${minio.endpoint.url}")
     private String minioUrl;
+
+    @Value("${minio.accessKey}")
+    private String accessKey;
+
+    @Value("${minio.secretKey}")
+    private String secretKey;
 
     @Bean
     public DataSource createDatasource() {
@@ -48,7 +57,40 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public MinioClient createMinioClient() {
         return MinioClient.builder().endpoint(minioUrl)
-                .credentials("DUqZH7GmcQ9rll9bYBCY", "4DiuznrM4BhTpQbPWOJZFjnmnBkhMunadbjpmbaS")
+//                .credentials("DUqZH7GmcQ9rll9bYBCY", "4DiuznrM4BhTpQbPWOJZFjnmnBkhMunadbjpmbaS")
+                .credentials(accessKey, secretKey)
                 .build();
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new LoginMemberArgumentResolver());
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new LoginCheckInterceptor())
+//                .order(1)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/", "/login", "css/**", "/*.ico", "assets/*", "img/*", "/error", "/member","/mypage", "/editMember", "/deleteMember");
+
+
+
+//        registry.addInterceptor(new LoginInterceptor())
+//                .order(2)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/", "/logout", "css/**", "/*.ico", "/error", "/mypage");
+
+
+//        registry.addInterceptor(new LoginInterceptor())
+//                .order(2)
+//                .addPathPatterns("/**") // 모든 경로에 인터셉터 적용
+//                .excludePathPatterns("/", "/logout", "css/**", "/*.ico", "/error", "/mypage");
+    }
+    @Bean
+    public MinioClient setMinioClient() {
+        return MinioClient.builder().endpoint(minioUrl)
+            .credentials(accessKey, secretKey)
+            .build();
     }
 }
