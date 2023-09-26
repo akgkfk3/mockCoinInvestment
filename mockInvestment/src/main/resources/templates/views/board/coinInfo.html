@@ -179,7 +179,6 @@
                   <th:block th:if="${count > 0}">
                     <tr th:each="board : ${boardList}">
                       <td th:text="${board['boardNum']}"></td>
-<!--                      <td th:text="${board['title']}"><a></a></td>-->
                       <td>
                         <a th:text="${board['title']}" th:href="@{/detail/board(category=info, boardNum=${board['boardNum']})}"></a>
                       </td>
@@ -201,7 +200,7 @@
         </div>
         <!-- Basic Pagination -->
         <nav id="paging" aria-label="Page navigation">
-          <ul class="pagination">
+          <ul class="pagination" th:if="${count != 0}">
             <li class="page-item first" th:if="${startPage > pageBlock}">
               <a class="page-link" th:href="@{/boards(category=info, pageNumber=1)}"
               ><i class="tf-icon bx bx-chevrons-left"></i

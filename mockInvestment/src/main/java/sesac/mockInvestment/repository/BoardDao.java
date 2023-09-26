@@ -8,7 +8,7 @@ public interface BoardDao {
 
     void save(BoardDto boardDto);
 
-    int getCount();
+    int getCount(String category);
 
     List<BoardDto> findByRange(String category, int startRow, int boardSize);
 

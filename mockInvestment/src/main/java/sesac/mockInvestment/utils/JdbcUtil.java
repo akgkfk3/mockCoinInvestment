@@ -11,6 +11,16 @@ import java.sql.SQLException;
 @Slf4j
 public class JdbcUtil {
 
+    public void close(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                log.info("pstmt close Error!! {}", e.getMessage());
+            }
+        }
+    }
+
     public void close(PreparedStatement pstmt) {
         if (pstmt != null) {
             try {

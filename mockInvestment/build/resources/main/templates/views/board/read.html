@@ -194,7 +194,7 @@
 
                         <!-- Recommand -->
                         <div id="recommand" class="mt-2">
-                            <button type="button" class="btn btn-info">
+                            <button id="recommandButton" type="button" class="btn btn-info">
                                 추천 수
                                 <span>50</span>
                             </button>
@@ -349,12 +349,27 @@
 <script src="../assets/vendor/js/menu.js"></script>
 <!-- endbuild -->
 
-<!-- Vendors JS -->
-
 <!-- Main JS -->
 <script src="../assets/js/main.js"></script>
 
-<!-- Page JS -->
+<!-- Axios Library -->
+<script src='https://unpkg.com/axios/dist/axios.min.js'></script>
+
+<script>
+      const recommandButton = document.getElementById("recommandButton");
+      recommandButton.addEventListener("click", () => {
+
+        const Url = "http://localhost:8080/recommand/18";
+
+        axios
+         .get(Url)
+         .then((data) => console.log(data))
+         .catch((err) => alert(err));
+
+        alert('hi');
+<!--        location.href="/board?category=info";-->
+      });
+</script>
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>

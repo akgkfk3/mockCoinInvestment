@@ -11,7 +11,7 @@ public interface BoardService {
 
     List<BoardDto> getBoards(String category, int startRow, int boardSize);
 
-    int getCount();
+    int getCount(String category);
 
     BoardDto getBoard(String category, int boardNum);
 }

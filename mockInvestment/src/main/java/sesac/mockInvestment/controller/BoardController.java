@@ -12,9 +12,16 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sesac.mockInvestment.domain.BoardDto;
 import sesac.mockInvestment.domain.BoardFormDto;
+import sesac.mockInvestment.domain.MemberDto;
 import sesac.mockInvestment.service.BoardService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Member;
+import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -43,7 +50,7 @@ public class BoardController {
         if (pageNumber == null)
             pageNumber = "1";
 
-        int count = boardService.getCount();                                        // 총 게시글 수
+        int count = boardService.getCount(category);                                // 총 게시글 수
         int currentPage = Integer.parseInt(pageNumber);                             // 현재 페이지 번호
         int boardSize = 2;                                                          // 한 페이지에 보여줄 게시글 개수
         int startRow = (currentPage-1) * boardSize + 1;                             // 현재 페이지 번호의 첫 번째 게시글의 행 번호
@@ -150,19 +157,40 @@ public class BoardController {
         return "board/read";
     }
 
-    @GetMapping("/download/{path}")
-    public ResponseEntity<InputStream> download(@PathVariable String path) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
-        System.out.println(path);
+    @GetMapping("/recommand/{boardNum}")
+    @ResponseBody
+    public String recommand(@PathVariable Integer boardNum,
+                            HttpServletRequest request) {
+        // 세션 정보 조회
+//        HttpSession session = request.getSession(false);
+//        MemberDto member = (MemberDto) session.getAttribute("member");
 
-        // 5-2. 파일 다운로드 (바이너리)
-        InputStream response = minioClient.getObject(
+        return "데이터 잘 보내졌니?";
+    }
+
+    /**
+     *
+     * @param path
+     * @param response
+     */
+    @GetMapping("/download/{path}")
+    public void download(@PathVariable String path, HttpServletResponse response) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        String originalFileName = path.split("_")[1];
+
+        InputStream data = minioClient.getObject(
                 GetObjectArgs.builder()
                         .bucket("akgkfk3")
                         .object(path)
                         .build()
         );
 
-        return null;
-//        return new ResponseEntity<InputStream>(400, response);
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(originalFileName, "UTF-8")+"\";");
+        response.setHeader("Content-Transfer-Encoding", "binary");
+
+        response.getOutputStream().write(data.readAllBytes());
+        data.close();
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
     }
 }

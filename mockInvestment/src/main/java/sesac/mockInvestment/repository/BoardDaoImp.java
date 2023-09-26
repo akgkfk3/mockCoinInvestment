@@ -52,6 +52,7 @@ public class BoardDaoImp implements BoardDao {
         } finally {
             jdbcutil.rollback(conn);
             jdbcutil.close(pstmt);
+            jdbcutil.close(conn);
         }
     }
 
@@ -93,8 +94,8 @@ public class BoardDaoImp implements BoardDao {
         } finally {
             jdbcutil.close(rs);
             jdbcutil.close(pstmt);
+            jdbcutil.close(conn);
         }
-
         return boardList;
     }
 
@@ -108,9 +109,17 @@ public class BoardDaoImp implements BoardDao {
         try {
             conn = dataSource.getConnection();
 
-            String sql = "SELECT * FROM BOARD WHERE Category = ? AND BoardNum = ?";
+            String sql = "UPDATE BOARD SET Hit = Hit + 1 WHERE Category = ? AND BoardNum = ?";
             pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, category);
+            pstmt.setInt(2, boardNum);
 
+            // 조회수 업데이트 (+1)
+            pstmt.executeUpdate();
+
+            // 게시글 검색
+            sql = "SELECT * FROM BOARD WHERE Category = ? AND BoardNum = ?";
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, category);
             pstmt.setInt(2, boardNum);
 
@@ -128,17 +137,21 @@ public class BoardDaoImp implements BoardDao {
                 board.setOriginalFileName(rs.getString("OriginalFileName"));
                 board.setServerFileName(rs.getString("ServerFileName"));
             }
+            conn.commit();
+
         } catch (SQLException e) {
             log.info("SQL Exception!!! {}", e.getMessage());
+            jdbcutil.rollback(conn);
         } finally {
             jdbcutil.close(rs);
             jdbcutil.close(pstmt);
+            jdbcutil.close(conn);
         }
         return board;
     }
 
     @Override
-    public int getCount() {
+    public int getCount(String category) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -147,9 +160,9 @@ public class BoardDaoImp implements BoardDao {
         try {
             conn = dataSource.getConnection();
 
-            String sql = "SELECT COUNT(*) FROM BOARD";
+            String sql = "SELECT COUNT(*) FROM BOARD WHERE Category = ?";
             pstmt = conn.prepareStatement(sql);
-
+            pstmt.setString(1, category);
             rs = pstmt.executeQuery();
 
             while(rs.next()) {
@@ -161,8 +174,8 @@ public class BoardDaoImp implements BoardDao {
         } finally {
             jdbcutil.close(rs);
             jdbcutil.close(pstmt);
+            jdbcutil.close(conn);
         }
-
         return count;
     }
 }

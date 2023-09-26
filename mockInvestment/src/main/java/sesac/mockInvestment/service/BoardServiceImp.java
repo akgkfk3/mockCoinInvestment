@@ -36,8 +36,8 @@ public class BoardServiceImp implements BoardService {
     }
 
     @Override
-    public int getCount() {
-        return boardDao.getCount();
+    public int getCount(String category) {
+        return boardDao.getCount(category);
     }
 
     @Override
