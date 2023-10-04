@@ -57,7 +57,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public MinioClient createMinioClient() {
         return MinioClient.builder().endpoint(minioUrl)
-//                .credentials("DUqZH7GmcQ9rll9bYBCY", "4DiuznrM4BhTpQbPWOJZFjnmnBkhMunadbjpmbaS")
                 .credentials(accessKey, secretKey)
                 .build();
     }
@@ -86,11 +85,5 @@ public class WebConfig implements WebMvcConfigurer {
 //                .order(2)
 //                .addPathPatterns("/**") // 모든 경로에 인터셉터 적용
 //                .excludePathPatterns("/", "/logout", "css/**", "/*.ico", "/error", "/mypage");
-    }
-    @Bean
-    public MinioClient setMinioClient() {
-        return MinioClient.builder().endpoint(minioUrl)
-            .credentials(accessKey, secretKey)
-            .build();
     }
 }

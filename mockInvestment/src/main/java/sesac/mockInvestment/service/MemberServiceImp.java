@@ -1,8 +1,6 @@
 package sesac.mockInvestment.service;
 
 import io.minio.MinioClient;
-import io.minio.ObjectWriteResponse;
-import jdk.internal.misc.Unsafe;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,8 +11,6 @@ import sesac.mockInvestment.domain.EditMemberFormDto;
 import sesac.mockInvestment.domain.MemberDto;
 import sesac.mockInvestment.domain.RegisterMemberFormDto;
 import sesac.mockInvestment.repository.MemberDao;
-
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
