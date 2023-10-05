@@ -6,18 +6,28 @@ import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.RedisOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.session.config.annotation.web.http.EnableSpringHttpSession;
+import org.springframework.session.data.redis.RedisSessionRepository;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import sesac.mockInvestment.argumentresolver.LoginMemberArgumentResolver;
 import javax.sql.DataSource;
+import java.time.Duration;
 import java.util.List;
-
 import static com.zaxxer.hikari.util.IsolationLevel.TRANSACTION_READ_COMMITTED;
 
 @Configuration
+@EnableSpringHttpSession
 public class WebConfig implements WebMvcConfigurer {
 
+    // MySQL 설정
     @Value("${spring.datasource.driver-class-name}")
     private String driver;
     @Value("${spring.datasource.url}")
@@ -25,8 +35,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${spring.datasource.username}")
     private String username;
     @Value("${spring.datasource.password}")
-    private String password;
+    private String mysqlPWD;
 
+    // MiniO 설정
     @Value("${minio.endpoint.url}")
     private String minioUrl;
 
@@ -35,6 +46,14 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Value("${minio.secretKey}")
     private String secretKey;
+    
+    // Redis 설정
+    @Value("${spring.data.redis.host}")
+    private String host;
+    @Value("${spring.data.redis.port}")
+    private int port;
+    @Value("${spring.data.redis.password}")
+    private String redisPWD;
 
     @Bean
     public DataSource createDatasource() {
@@ -45,7 +64,7 @@ public class WebConfig implements WebMvcConfigurer {
         hikariConfig.setDriverClassName(driver);
         hikariConfig.setJdbcUrl(url);
         hikariConfig.setUsername(username);
-        hikariConfig.setPassword(password);
+        hikariConfig.setPassword(mysqlPWD);
         hikariConfig.setPoolName("sesacMySQL");
         hikariConfig.setMaximumPoolSize(50);
         hikariConfig.setAutoCommit(false);
@@ -59,6 +78,29 @@ public class WebConfig implements WebMvcConfigurer {
         return MinioClient.builder().endpoint(minioUrl)
                 .credentials(accessKey, secretKey)
                 .build();
+    }
+
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration(host, port);
+        redisConfig.setPassword(redisPWD);
+        return new LettuceConnectionFactory(redisConfig);
+    }
+
+    @Bean
+    public RedisOperations<String, Object> sessionRedisOperations() {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(redisConnectionFactory());
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        return template;
+    }
+
+    @Bean
+    public RedisSessionRepository sessionRepository(RedisOperations<String, Object> sessionRedisOperations) {
+        RedisSessionRepository redisSessionRepository = new RedisSessionRepository(sessionRedisOperations);
+        redisSessionRepository.setDefaultMaxInactiveInterval(Duration.ofSeconds(1800));
+        return redisSessionRepository;
     }
 
     @Override

@@ -9,12 +9,9 @@ import sesac.mockInvestment.domain.EditMemberFormDto;
 import sesac.mockInvestment.domain.MemberDto;
 import sesac.mockInvestment.domain.RegisterMemberFormDto;
 import sesac.mockInvestment.utils.JdbcUtil;
-
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Slf4j
@@ -24,7 +21,6 @@ public class MemberDaoImp implements MemberDao {
     private final DataSource dataSource;
 
     private final JdbcUtil jdbcUtil;
-
 
     @Override
     public MemberDto findById(String id) {
@@ -43,6 +39,7 @@ public class MemberDaoImp implements MemberDao {
 
             if (rs.next()) {
                 memberDto = new MemberDto();
+                memberDto.setMemberNum(rs.getInt("MemberNum"));
                 memberDto.setId(rs.getString("id"));
                 memberDto.setPassword(rs.getString("password"));
                 memberDto.setName(rs.getString("name"));
@@ -53,16 +50,15 @@ public class MemberDaoImp implements MemberDao {
             }
             System.out.println(memberDto+"memberDTO 체크");
 
-        }catch (SQLException e){
+        } catch (SQLException e){
             e.getStackTrace();
             jdbcUtil.rollback(conn);
-        }finally {
+
+        } finally {
+            jdbcUtil.close(conn);
             jdbcUtil.close(rs);
             jdbcUtil.close(pstmt);
         }
-
-
-
         return memberDto;
     }
 
@@ -94,18 +90,14 @@ public class MemberDaoImp implements MemberDao {
             }
             System.out.println(members);
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e){
             e.getStackTrace();
             jdbcUtil.rollback(conn);
-        }finally {
+        } finally {
+            jdbcUtil.close(conn);
             jdbcUtil.close(rs);
             jdbcUtil.close(pstmt);
-
         }
-
-
-
         return members;
     }
 
@@ -156,14 +148,11 @@ public class MemberDaoImp implements MemberDao {
             jdbcUtil.rollback(conn);
         }
         finally {
+            jdbcUtil.close(conn);
             jdbcUtil.close(pstmt);
-
         }
-
         return result;
     }
-
-
 
     @Override
     public int delete(String id)  {
@@ -183,15 +172,13 @@ public class MemberDaoImp implements MemberDao {
                 conn.rollback();
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e){
             e.getStackTrace();
             jdbcUtil.rollback(conn);
-        }finally {
+        } finally {
+            jdbcUtil.close(conn);
             jdbcUtil.close(pstmt);
         }
-
-
-
         return result;
     }
 
@@ -229,46 +216,13 @@ public class MemberDaoImp implements MemberDao {
             }
 
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e){
             e.getStackTrace();
             jdbcUtil.rollback(conn);
-        }finally {
+        } finally {
+            jdbcUtil.close(conn);
             jdbcUtil.close(pstmt);
         }
-
-
-
-            return result;
-    }
-
-    @Override
-    public void close(Statement stmt, ResultSet resultSet) {
-        if(resultSet != null){
-            try {
-                resultSet.close();
-            }catch (SQLException e){
-                log.info("error",e);
-            }
-        }
-
-        if (stmt != null){
-            try {
-                stmt.close();
-            }catch (SQLException e){
-                log.info("error",e);
-            }
-        }
-
-//        if (conn != null){
-//            try {
-//                conn.close();
-//            }catch (SQLException e){
-//                log.info("error",e);
-//            }
-//        }
-
-
-
+        return result;
     }
 }

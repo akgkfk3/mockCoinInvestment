@@ -15,22 +15,8 @@ import java.io.IOException;
 @Controller
 public class HomeController {
 
-
-    @GetMapping("/error")
-    public String error(HttpServletResponse response) throws IOException {
-
-        response.sendError(HttpServletResponse.SC_FORBIDDEN);
-
-        return "error/4xx";
-    }
-
     @GetMapping("/")
-    public String homeLoginArgumentResolver(@Login LoginMemberFormDto LoginMemberFormDto, Model model, HttpSession session) {
-//        String deleteMessage = (String) session.getAttribute("deleteMessage");
-//        model.addAttribute("deleteMessage", deleteMessage);
-
+    public String home() {
         return "index";
     }
-
-
 }

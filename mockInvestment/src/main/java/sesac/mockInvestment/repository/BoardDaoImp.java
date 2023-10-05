@@ -22,9 +22,10 @@ public class BoardDaoImp implements BoardDao {
 
     private final JdbcUtil jdbcutil;
 
-    public void save(BoardDto boardDto) {
+    public int save(BoardDto boardDto) {
         Connection conn = null;
         PreparedStatement pstmt = null;
+        int count = 0;
 
         try {
             String sql = "INSERT INTO BOARD " +
@@ -44,7 +45,7 @@ public class BoardDaoImp implements BoardDao {
             pstmt.setString(8, boardDto.getOriginalFileName());     // 원본 파일명
             pstmt.setString(9, boardDto.getServerFileName());       // 서버 파일명
 
-            pstmt.executeUpdate();
+            count = pstmt.executeUpdate();
             conn.commit();
 
         } catch (SQLException e) {
@@ -54,6 +55,7 @@ public class BoardDaoImp implements BoardDao {
             jdbcutil.close(pstmt);
             jdbcutil.close(conn);
         }
+        return count;
     }
 
     @Override
@@ -66,7 +68,7 @@ public class BoardDaoImp implements BoardDao {
         try {
             conn = dataSource.getConnection();
 
-            String sql = "SELECT * FROM BOARD WHERE Category = ? ORDER BY BoardNum desc LIMIT ? OFFSET ?  ";
+            String sql = "SELECT * FROM BoardRecommand WHERE Category = ? ORDER BY BoardNum desc LIMIT ? OFFSET ?  ";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, category);
             pstmt.setInt(2, boardSize);
@@ -82,7 +84,7 @@ public class BoardDaoImp implements BoardDao {
                 board.setContent(rs.getString("Content"));
                 board.setAuthor(rs.getString("Author"));
                 board.setHit(rs.getInt("Hit"));
-                board.setRecommand(0);
+                board.setRecommand(rs.getInt("Recommand"));
                 board.setRegisterDate(rs.getString("RegisterDate"));
                 board.setOriginalFileName(rs.getString("OriginalFileName"));
                 board.setServerFileName(rs.getString("ServerFileName"));
@@ -118,7 +120,7 @@ public class BoardDaoImp implements BoardDao {
             pstmt.executeUpdate();
 
             // 게시글 검색
-            sql = "SELECT * FROM BOARD WHERE Category = ? AND BoardNum = ?";
+            sql = "SELECT * FROM BoardRecommand WHERE Category = ? AND BoardNum = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, category);
             pstmt.setInt(2, boardNum);
@@ -127,12 +129,13 @@ public class BoardDaoImp implements BoardDao {
 
             while (rs.next()) {
                 board.setBoardNum(rs.getInt("BoardNum"));
+                board.setMemberNum(rs.getInt("MemberNum"));
                 board.setCategory(rs.getString("Category"));
                 board.setTitle(rs.getString("Title"));
                 board.setContent(rs.getString("Content"));
                 board.setAuthor(rs.getString("Author"));
                 board.setHit(rs.getInt("Hit"));
-                board.setRecommand(0);
+                board.setRecommand(rs.getInt("Recommand"));
                 board.setRegisterDate(rs.getString("RegisterDate"));
                 board.setOriginalFileName(rs.getString("OriginalFileName"));
                 board.setServerFileName(rs.getString("ServerFileName"));
@@ -148,6 +151,66 @@ public class BoardDaoImp implements BoardDao {
             jdbcutil.close(conn);
         }
         return board;
+    }
+
+    @Override
+    public int save(int boardNum, int memberNum) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        int count = 0;
+
+        try {
+            conn = dataSource.getConnection();
+
+            String sql = "INSERT INTO RECOMMAND " +
+                    "(MemberNum, BoardNum)" +
+                    "VALUES" +
+                    "(?, ?)";
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, memberNum);
+            pstmt.setInt(2, boardNum);
+
+            count = pstmt.executeUpdate();
+            conn.commit();
+
+        } catch (SQLException e) {
+            log.info("SQL Exception!!! {}", e.getMessage());
+            jdbcutil.rollback(conn);
+        } finally {
+            jdbcutil.close(pstmt);
+            jdbcutil.close(conn);
+        }
+        return count;
+    }
+
+    @Override
+    public int getRecommand(int boardNum) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int count = 0;
+
+        try {
+            conn = dataSource.getConnection();
+
+            String sql = "SELECT COUNT(*) FROM RECOMMAND WHERE BoardNum = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, boardNum);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            log.info("SQL Exception!!! {}", e.getMessage());
+        } finally {
+            jdbcutil.close(rs);
+            jdbcutil.close(pstmt);
+            jdbcutil.close(conn);
+        }
+        return count;
     }
 
     @Override
