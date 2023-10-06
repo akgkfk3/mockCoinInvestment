@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import sesac.mockInvestment.Exception.RecommandException;
 import sesac.mockInvestment.domain.BoardDto;
+import sesac.mockInvestment.domain.BoardFormDto;
 import sesac.mockInvestment.repository.BoardDao;
 import sesac.mockInvestment.utils.MinioFileStore;
 
@@ -62,13 +63,22 @@ public class BoardServiceImp implements BoardService {
     }
 
     @Override
-    public BoardDto editForm(int boardNum) {
-        return boardDao.findByNum(boardNum);
+    public void edit(int boardNum, BoardFormDto boardDto) throws SQLException {
+        // 업로드 해야 할 파일이 있는지 확인
+        /*MultipartFile file = boardDto.getFile();
+        if (!boardDto.getFile().isEmpty()) {
+            fileStore.save(boardDto, file);
+        }*/
+
+        // DB에 업데이트가 안된 경우, 예외 발생
+        if (boardDao.edit(boardNum, boardDto) != 1) {
+            throw new SQLException();
+        }
     }
 
     @Override
-    public void edit() {
-
+    public BoardDto editForm(int boardNum) {
+        return boardDao.findByNum(boardNum);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package sesac.mockInvestment.repository;
 
 import sesac.mockInvestment.domain.BoardDto;
+import sesac.mockInvestment.domain.BoardFormDto;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -20,6 +21,8 @@ public interface BoardDao {
     BoardDto read(String category, int boardNum);
 
     int save(int boardNum, int memberNum);
+
+    int edit(int boardNum, BoardFormDto boardDto);
 
     int getRecommand(int boardNum);
 }

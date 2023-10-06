@@ -15,6 +15,7 @@ import sesac.mockInvestment.Exception.NotLoginException;
 import sesac.mockInvestment.Exception.RecommandException;
 import sesac.mockInvestment.SessionConst;
 import sesac.mockInvestment.domain.BoardDto;
+import sesac.mockInvestment.domain.BoardEditFormDto;
 import sesac.mockInvestment.domain.BoardFormDto;
 import sesac.mockInvestment.domain.MemberDto;
 import sesac.mockInvestment.service.BoardService;
@@ -184,11 +185,11 @@ public class BoardController {
     }
 
     @PostMapping("/board/{boardNum}")
-    public String edit(@Validated @ModelAttribute("board") BoardFormDto boardDto,
-                       BindingResult bindingResult,
-                       @SessionAttribute(name = SessionConst.LOGIN_MEMBER) MemberDto memberDto,
-                       RedirectAttributes redirectAttributes) {
+    public String edit(@ModelAttribute("board") BoardFormDto boardDto,
+                       @PathVariable Integer boardNum,
+                       RedirectAttributes redirectAttributes) throws SQLException {
 
+        boardService.edit(boardNum, boardDto);
 
         return "redirect:/";
     }

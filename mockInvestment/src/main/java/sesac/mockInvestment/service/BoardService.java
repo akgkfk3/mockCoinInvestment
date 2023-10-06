@@ -3,6 +3,7 @@ package sesac.mockInvestment.service;
 import io.minio.errors.*;
 import org.springframework.web.multipart.MultipartFile;
 import sesac.mockInvestment.domain.BoardDto;
+import sesac.mockInvestment.domain.BoardFormDto;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -22,9 +23,9 @@ public interface BoardService {
 
     int recommand(int boardNum, int memberNum);
 
-    BoardDto editForm(int boardNum);
+    void edit(int boardNum, BoardFormDto boardDto) throws SQLException;
 
-    void edit();
+    BoardDto editForm(int boardNum);
 
     void delete(int boardNum, int memberNum);
 }

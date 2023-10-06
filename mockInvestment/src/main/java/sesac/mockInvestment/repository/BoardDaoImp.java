@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import sesac.mockInvestment.domain.BoardDto;
+import sesac.mockInvestment.domain.BoardFormDto;
 import sesac.mockInvestment.utils.JdbcUtil;
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -216,6 +217,35 @@ public class BoardDaoImp implements BoardDao {
             count = pstmt.executeUpdate();
             conn.commit();
 
+        } catch (SQLException e) {
+            log.info("SQL Exception!!! {}", e.getMessage());
+            jdbcutil.rollback(conn);
+        } finally {
+            jdbcutil.close(pstmt);
+            jdbcutil.close(conn);
+        }
+        return count;
+    }
+
+    @Override
+    public int edit(int boardNum, BoardFormDto boardDto) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        int count = 0;
+
+        try {
+            conn = dataSource.getConnection();
+
+            String sql = "UPDATE BOARD SET Title = ?, Content = ?" +
+                         "WHERE BoardNum = ?";
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, boardDto.getTitle());
+            pstmt.setString(2, boardDto.getContent());
+            pstmt.setInt(3, boardNum);
+
+            count = pstmt.executeUpdate();
+            conn.commit();
         } catch (SQLException e) {
             log.info("SQL Exception!!! {}", e.getMessage());
             jdbcutil.rollback(conn);
