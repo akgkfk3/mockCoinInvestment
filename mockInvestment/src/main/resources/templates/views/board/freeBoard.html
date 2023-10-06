@@ -186,7 +186,7 @@
                     <tr th:each="board : ${boardList}">
                       <td th:text="${board['boardNum']}"></td>
                       <td>
-                        <a th:text="${board['title']}" th:href="@{/detail/board(category=free, boardNum=${board['boardNum']})}"></a>
+                        <a th:text="${board['title']}" th:href="@{/detail/board(category=free, boardNum=${board['boardNum']}, pageNumber=${pageNumber})}"></a>
                       </td>
                       <td th:text="${board['author']}"></td>
                       <td th:text="${board['registerDate']}"></td>

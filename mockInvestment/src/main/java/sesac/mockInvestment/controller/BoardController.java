@@ -161,10 +161,12 @@ public class BoardController {
     @GetMapping("/detail/board")
     public String read(@RequestParam String category,
                        @RequestParam Integer boardNum,
+                       @RequestParam Integer pageNumber,
                        @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) MemberDto memberDto,
                        Model model) {
         BoardDto board = boardService.getBoard(category, boardNum);
         model.addAttribute("board", board);
+        model.addAttribute("pageNumber", pageNumber);
 
         if (memberDto != null && memberDto.getMemberNum().equals(board.getMemberNum()))
             model.addAttribute("boardFlag", true);
@@ -172,16 +174,38 @@ public class BoardController {
         return "board/read";
     }
 
-    @GetMapping("gffgdfgdfgd")
-    public String update() {
+    @GetMapping("/board/{boardNum}")
+    public String editForm(@PathVariable Integer boardNum, Model model) {
+        BoardDto board = boardService.editForm(boardNum);
 
-        return null;
+        model.addAttribute("board", board);
+
+        return "board/write";
     }
 
-    @GetMapping("fgdgfdfgdfgd")
-    public String delete() {
+    @PostMapping("/board/{boardNum}")
+    public String edit(@Validated @ModelAttribute("board") BoardFormDto boardDto,
+                       BindingResult bindingResult,
+                       @SessionAttribute(name = SessionConst.LOGIN_MEMBER) MemberDto memberDto,
+                       RedirectAttributes redirectAttributes) {
 
-        return null;
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/detail/board/{boardNum}")
+    public String remove(@PathVariable Integer boardNum,
+                         @RequestParam Integer pageNumber,
+                         @RequestParam String category,
+                         @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) MemberDto memberDto,
+                         RedirectAttributes redirectAttributes) {
+        // 삭제 로직 실행
+        boardService.delete(boardNum, memberDto.getMemberNum());
+
+        redirectAttributes.addAttribute("category", category);
+        redirectAttributes.addAttribute("pageNumber", pageNumber);
+
+        return "redirect:/boards";
     }
 
     @GetMapping("/recommand/{boardNum}")

@@ -59,6 +59,48 @@ public class BoardDaoImp implements BoardDao {
     }
 
     @Override
+    public int delete(int boardNum) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        int count = 0;
+
+        try {
+            conn = dataSource.getConnection();
+
+            // 게시글 삭제 전, 추천 테이블 레코드 삭제
+            String sql = "DELETE FROM RECOMMAND WHERE BoardNum = ?";
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, boardNum);
+            count = pstmt.executeUpdate();
+            pstmt.close();
+
+            // 게시글 삭제 전, 댓글 삭제
+            sql = "DELETE FROM COMMENT WHERE BoardNum = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, boardNum);
+            count = pstmt.executeUpdate();
+            pstmt.close();
+
+            // 게시글 삭제
+            sql = "DELETE FROM BOARD WHERE BoardNum = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, boardNum);
+            count = pstmt.executeUpdate();
+
+            conn.commit();
+
+        } catch (SQLException e) {
+            log.info("SQL Exception!!! {}", e.getMessage());
+        } finally {
+            jdbcutil.rollback(conn);
+            jdbcutil.close(pstmt);
+            jdbcutil.close(conn);
+        }
+        return count;
+    }
+
+    @Override
     public List<BoardDto> findByRange(String category, int startRow, int boardSize) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -102,7 +144,7 @@ public class BoardDaoImp implements BoardDao {
     }
 
     @Override
-    public BoardDto findByNum(String category, int boardNum) {
+    public BoardDto read(String category, int boardNum) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -240,5 +282,46 @@ public class BoardDaoImp implements BoardDao {
             jdbcutil.close(conn);
         }
         return count;
+    }
+
+    @Override
+    public BoardDto findByNum(int boardNum) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        BoardDto boardDto = null;
+
+        try {
+            String sql = "SELECT * FROM BoardRecommand WHERE BoardNum = ?";
+            conn = dataSource.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, boardNum);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                boardDto = new BoardDto();
+                boardDto.setBoardNum(rs.getInt("BoardNum"));
+                boardDto.setMemberNum(rs.getInt("MemberNum"));
+                boardDto.setCategory(rs.getString("Category"));
+                boardDto.setTitle(rs.getString("Title"));
+                boardDto.setContent(rs.getString("Content"));
+                boardDto.setAuthor(rs.getString("Author"));
+                boardDto.setHit(rs.getInt("Hit"));
+                boardDto.setRecommand(rs.getInt("Recommand"));
+                boardDto.setRegisterDate(rs.getString("RegisterDate"));
+                boardDto.setOriginalFileName(rs.getString("OriginalFileName"));
+                boardDto.setServerFileName(rs.getString("ServerFileName"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            jdbcutil.close(rs);
+            jdbcutil.close(pstmt);
+            jdbcutil.close(conn);
+        }
+        return boardDto;
     }
 }

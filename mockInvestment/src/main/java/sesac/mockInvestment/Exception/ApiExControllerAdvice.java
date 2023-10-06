@@ -13,14 +13,14 @@ public class ApiExControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(RecommandException.class)
     public ErrorResult recommandException(RecommandException e) {
-        log.error("[recommandException] ex", e);
+        log.error("RecommandException");
         return new ErrorResult("LoginError", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NotLoginException.class)
     public ErrorResult notLoginException(NotLoginException e) {
-        log.error("[notLoginException] ex", e);
+        log.error("NotLoginException");
         return new ErrorResult("RecommandError", e.getMessage());
     }
 }

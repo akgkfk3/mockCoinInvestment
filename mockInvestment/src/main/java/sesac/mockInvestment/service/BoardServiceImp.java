@@ -50,7 +50,7 @@ public class BoardServiceImp implements BoardService {
 
     @Override
     public BoardDto getBoard(String category, int boardNum) {
-        return boardDao.findByNum(category, boardNum);
+        return boardDao.read(category, boardNum);
     }
 
     @Override
@@ -59,5 +59,27 @@ public class BoardServiceImp implements BoardService {
             throw new RecommandException("이미 추천하셨습니다.");
         }
         return boardDao.getRecommand(boardNum);
+    }
+
+    @Override
+    public BoardDto editForm(int boardNum) {
+        return boardDao.findByNum(boardNum);
+    }
+
+    @Override
+    public void edit() {
+
+    }
+
+    @Override
+    public void delete(int boardNum, int memberNum) {
+        BoardDto boardDto = boardDao.findByNum(boardNum);
+
+        if (boardDto == null) {
+            throw new RuntimeException();
+        } else if (boardDto.getMemberNum() != memberNum) {
+            throw new RuntimeException();
+        }
+        boardDao.delete(boardNum);
     }
 }

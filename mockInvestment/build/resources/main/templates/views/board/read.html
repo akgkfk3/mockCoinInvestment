@@ -190,8 +190,8 @@
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <div class="dropdown-menu" style="">
-                                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> 수정</a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> 삭제</a>
+                                            <a id="updateButton" class="dropdown-item" th:href="@{/board/{boardNum}(boardNum=${board['boardNum']})}"><i class="bx bx-edit-alt me-1"></i> 수정</a>
+                                            <a id="deleteButton" class="dropdown-item" th:href="@{/detail/board/{boardNum}(boardNum=${board['boardNum']}, pageNumber=${pageNumber}, category=${board['category']})}"><i class="bx bx-trash me-1"></i> 삭제</a>
                                         </div>
                                     </div>
                                 </div>
@@ -226,7 +226,7 @@
                         <div class="input-group mt-3">
                             <span class="input-group-text">댓글</span>
                             <textarea class="form-control" aria-label="With textarea" placeholder="Comment"></textarea>
-                            <button type="button" class="btn btn-primary">등록</button>
+                            <button id="commentButton" type="button" class="btn btn-primary">등록</button>
                         </div>
                         <hr>
 
@@ -277,7 +277,6 @@
                                     <p>댓글 테스트 용도입니다.</p>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -369,7 +368,7 @@
 
 
 <script>
-    $("#recommandButton").click(function() {
+   $("#recommandButton").click(function() {
         alert('hi');
 <!--        서버로 보낼 데이터 (선택 사항)-->
 <!--        var requestData = {-->
@@ -383,6 +382,7 @@
             type: "GET",
 
             <!-- 서버 엔드포인트 URL -->
+<!--            url: "https://toyproject.shucloud.site/recommand/[[${board['boardNum']}]]",-->
             url: "http://localhost:8080/recommand/[[${board['boardNum']}]]",
 
             <!-- 서버로 전송할 데이터 -->
@@ -393,12 +393,11 @@
 
             <!-- 성공적으로 응답 받았을 때 실행되는 콜백 함수 -->
             success: function(response) {
-                alert("success");
+                alert("추천!!");
                 console.log(response);
 
                 $("#recommandButton > span").text(response);
                 $(".top-recommand").text(response);
-
 
             <!-- $("#result").html("서버 응답: " + JSON.stringify(response));-->
             },

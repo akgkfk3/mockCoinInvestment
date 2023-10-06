@@ -21,4 +21,10 @@ public interface BoardService {
     BoardDto getBoard(String category, int boardNum);
 
     int recommand(int boardNum, int memberNum);
+
+    BoardDto editForm(int boardNum);
+
+    void edit();
+
+    void delete(int boardNum, int memberNum);
 }
