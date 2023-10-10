@@ -9,19 +9,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import sesac.mockInvestment.SessionConst;
 import sesac.mockInvestment.domain.LoginMemberFormDto;
 import sesac.mockInvestment.domain.MemberDto;
 import sesac.mockInvestment.repository.MemberDao;
 import sesac.mockInvestment.service.MemberService;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.sql.SQLException;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,9 +42,10 @@ public String login(@Validated @ModelAttribute LoginMemberFormDto loginMemberFor
     if(loginMember == null){
         return "login/loginForm";
     }
-    //세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
+    // 세션이 있으면 있는 세션 반환, 없으면 신규 세션을 생성
     HttpSession session = request.getSession();
-    //세션에 로그인 회원 정보 보관
+
+    // 세션에 로그인 회원 정보 보관
     session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
     System.out.println("userName찾기"+loginMember.getName());
     session.setAttribute("loggedInUserName", loginMember.getName());
@@ -73,5 +68,4 @@ public String login(@Validated @ModelAttribute LoginMemberFormDto loginMemberFor
     public String forgotPassword() {
         return "login/forgotPassword";
     }
-
 }

@@ -16,10 +16,10 @@
   lang="en"
   class="light-style layout-menu-fixed"
   dir="ltr"
+  xmlns:th="http://www.thymeleaf.org"
   data-theme="theme-default"
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
-  xmlns:th="http://www.thymeleaf.org"
 >
   <head>
     <meta charset="utf-8" />
@@ -69,6 +69,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--업비트 시세 조회-->    
     <script>
+<<<<<<< HEAD
       function comma(str) {
           str = String(str);
           return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
@@ -122,7 +123,46 @@
       // 아이디 삭제시 알림
 
   </head>
+=======
+      $(document).ready(function() {
+            setInterval(sendHttpRequest, 4000);
+>>>>>>> feature/board
 
+            function sendHttpRequest() {
+                $.ajax({
+                    url: 'http://localhost:8080/coinList',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                         $("#coinBody").remove();
+                         let tbody = $('<tbody id="coinBody" class="table-border-bottom-0">');
+
+                         for (let i=0; i < data.length; i++) {
+                           let row = $('<tr>');
+                           row.append($('<td>').text(data[i].name));
+                           row.append($('<td>').text(data[i].opening_price + "원"));
+                           row.append($('<td>').text(data[i].low_price + "원"));
+                           row.append($('<td>').text(data[i].high_price + "원"));
+                           row.append($('<td>').text(data[i].trade_price + "원"));
+                           row.append($('<td>').text(data[i].prev_closing_price + "원"));
+                           row.append($('<td>').text(data[i].acc_trade_price_24h + "원"));
+                           tbody.append(row);
+                         }
+                         $("#coinTable").append(tbody);
+
+                    },
+                    error: function(xhr, status, error) {
+
+                        console.error('HTTP 요청 실패: ', error);
+                    }
+                });
+            }
+            sendHttpRequest();
+        });
+    </script>
+
+
+  </head>
   <body>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
@@ -234,10 +274,7 @@
                 </div>
               </div>
               <!-- /Search -->
-
-             
             </div>
-            
           </nav>
 
           <!-- / Navbar -->
@@ -245,47 +282,24 @@
           <!-- Content wrapper -->
           <div class="content-wrapper d-flex flex-row">
             <!-- Content -->
-
             <div class="container-p-x flex-grow-1 container-p-y">
-              <!--업비트 시세조회-->
-              <div id='tmp' style="color:pink;">
-              </div>
-              <br /><br />
-                <table id="table_ticker" class="table table-hover text-center">
-                  <thead>
-                  <tr>
-                    <td>NO</td>
-                    <td>한글명</td>
-                    <td>현재가</td>
-                    <td>전일대비</td>
-                    <td>거래대금</td>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-                <br /><br /><br />
-              <div id='tmp2'>          
-              </div>
-
-            </div>
-
-            <div class="container-p-y flex-grow-1 align-items-center text-center">
-              <button 
-              class="d-inline-block btn btn-danger rounded "
-              type="button"              
-              data-bs-toggle="modal"
-              data-bs-target="#modalCenter"
-              >매수</button>
-              <button 
-              class="d-inline-block btn btn-primary text- rounded mx-3"
-              type="button"              
-              data-bs-toggle="modal"
-              data-bs-target="#modalCenter"
-              >매도</button>
+              <table id="coinTable" class="table table-dark">
+                <thead>
+                <tr>
+                  <th>코인명</th>
+                  <th>금일 시작가</th>
+                  <th>금일 최저가</th>
+                  <th>금일 최고가</th>
+                  <th>금일 현재가</th>
+                  <th>전일 종가</th>
+                  <th>거래 대금</th>
+                </tr>
+                </thead>
+                <tbody id="coinBody" class="table-border-bottom-0">
+                </tbody>
+              </table>
             </div>
             <!-- / Content -->
-
             <div class="content-backdrop fade"></div>
           </div>
           <!-- Footer -->

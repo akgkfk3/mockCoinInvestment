@@ -28,7 +28,7 @@
           content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
   />
 
-  <title>Tables - Basic Tables | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+  <title>코인정보 게시판</title>
 
   <meta name="description" content="" />
 
@@ -89,9 +89,13 @@
       <div class="menu-inner-shadow"></div>
 
       <ul class="menu-inner py-1">
-        <li class="menu-item text-end mb-4 mt-4">
-          <a href="auth-login-basic.html" title="로그인" class="text-secondary">로그인</a>
-          <a href="auth-register-basic.html" title="회원가입" class="mx-2 text-secondary">회원가입</a>
+        <li class="menu-item text-end mb-4 mt-4" th:if="${session['loginMember'] == null}">
+          <a href="/login" title="로그인" class="text-secondary">로그인</a>
+          <a href="/member" title="회원가입" class="mx-2 text-secondary">회원가입</a>
+        </li>
+        <li class="menu-item text-end mb-4 mt-4" th:if="${session['loginMember'] != null}">
+          <a href="/logout" title="로그아웃" class="text-secondary mx-2">로그아웃</a><br/>
+          <span th:text="${session['loggedInUserName']}+ ' 님 환영합니다.'" class="mx-2 text-secondary">환영합니다.</span>
         </li>
         <!-- Dashboard -->
         <li class="menu-item">
@@ -103,7 +107,7 @@
 
         <!-- Layouts -->
         <li class="menu-item py-1">
-          <a href="layouts-fluid.html" class="menu-link">
+          <a href="/mypage" class="menu-link">
             <i class="menu-icon tf-icons bx bx-layout"></i>
             <div data-i18n="Layouts">My Page</div>
           </a>
@@ -180,7 +184,7 @@
                     <tr th:each="board : ${boardList}">
                       <td th:text="${board['boardNum']}"></td>
                       <td>
-                        <a th:text="${board['title']}" th:href="@{/detail/board(category=info, boardNum=${board['boardNum']})}"></a>
+                        <a th:text="${board['title']}" th:href="@{/detail/board(category=info, boardNum=${board['boardNum']}, pageNumber=${pageNumber})}"></a>
                       </td>
                       <td th:text="${board['author']}"></td>
                       <td th:text="${board['registerDate']}"></td>

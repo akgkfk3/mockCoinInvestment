@@ -28,7 +28,7 @@
             content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Tables - Basic Tables | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>게시글</title>
 
     <meta name="description" content="" />
 
@@ -73,7 +73,7 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
             <div class="app-brand demo">
-                <a href="index.html" class="app-brand-link">
+                <a href="/" class="app-brand-link">
               <span class="app-brand-logo demo">
 
                 <img src="../assets/img/ssac.png" alt="새싹코인" width="30px;"/>
@@ -89,13 +89,17 @@
             <div class="menu-inner-shadow"></div>
 
             <ul class="menu-inner py-1">
-                <li class="menu-item text-end mb-4 mt-4">
-                    <a href="auth-login-basic.html" title="로그인" class="text-secondary">로그인</a>
-                    <a href="auth-register-basic.html" title="회원가입" class="mx-2 text-secondary">회원가입</a>
+                <li class="menu-item text-end mb-4 mt-4" th:if="${session['loginMember'] == null}">
+                    <a href="/login" title="로그인" class="text-secondary">로그인</a>
+                    <a href="/member" title="회원가입" class="mx-2 text-secondary">회원가입</a>
+                </li>
+                <li class="menu-item text-end mb-4 mt-4" th:if="${session['loginMember'] != null}">
+                    <a href="/logout" title="로그아웃" class="text-secondary mx-2">로그아웃</a><br/>
+                    <span th:text="${session['loggedInUserName']}+ ' 님 환영합니다.'" class="mx-2 text-secondary">환영합니다.</span>
                 </li>
                 <!-- Dashboard -->
                 <li class="menu-item">
-                    <a href="@{/}" class="menu-link">
+                    <a href="/" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Analytics">Main Page</div>
                     </a>
@@ -103,7 +107,7 @@
 
                 <!-- Layouts -->
                 <li class="menu-item py-1">
-                    <a href="layouts-fluid.html" class="menu-link">
+                    <a href="/mypage" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-layout"></i>
                         <div data-i18n="Layouts">My Page</div>
                     </a>
@@ -165,7 +169,7 @@
                                 </div>
                                 <div class="board-author-item">
                                     <span>추천수</span>
-                                    <span th:text="${board['recommand']}">50</span>
+                                    <span class="top-recommand" th:text="${board['recommand']}">50</span>
                                 </div>
                                 <div class="board-author-item">
                                     <span>댓글</span>
@@ -179,6 +183,17 @@
                                 <div class="board-author-item">
                                     <span>조회 수</span>
                                     <span th:text="${board['hit']}">66</span>
+                                </div>
+                                <div class="board-author-item" th:if="${boardFlag == true}">
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                        </button>
+                                        <div class="dropdown-menu" style="">
+                                            <a id="updateButton" class="dropdown-item" th:href="@{/board/{boardNum}(boardNum=${board['boardNum']})}"><i class="bx bx-edit-alt me-1"></i> 수정</a>
+                                            <a id="deleteButton" class="dropdown-item" th:href="@{/detail/board/{boardNum}(boardNum=${board['boardNum']}, pageNumber=${pageNumber}, category=${board['category']})}"><i class="bx bx-trash me-1"></i> 삭제</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -196,7 +211,7 @@
                         <div id="recommand" class="mt-2">
                             <button id="recommandButton" type="button" class="btn btn-info">
                                 추천 수
-                                <span>50</span>
+                                <span th:text="${board['recommand']}">0</span>
                             </button>
                         </div>
                         <!-- Download -->
@@ -211,7 +226,7 @@
                         <div class="input-group mt-3">
                             <span class="input-group-text">댓글</span>
                             <textarea class="form-control" aria-label="With textarea" placeholder="Comment"></textarea>
-                            <button type="button" class="btn btn-primary">등록</button>
+                            <button id="commentButton" type="button" class="btn btn-primary">등록</button>
                         </div>
                         <hr>
 
@@ -262,7 +277,6 @@
                                     <p>댓글 테스트 용도입니다.</p>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -352,20 +366,51 @@
 <!-- Axios Library -->
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
 
+
 <script>
-      const recommandButton = document.getElementById("recommandButton");
-      recommandButton.addEventListener("click", () => {
-
-        const Url = "http://localhost:8080/recommand/18";
-
-        axios
-         .get(Url)
-         .then((data) => console.log(data))
-         .catch((err) => alert(err));
-
+   $("#recommandButton").click(function() {
         alert('hi');
-<!--        location.href="/board?category=info";-->
-      });
+<!--        서버로 보낼 데이터 (선택 사항)-->
+<!--        var requestData = {-->
+<!--            key1: "value1",-->
+<!--            key2: "value2"-->
+<!--        };-->
+
+        <!-- Ajax 요청 설정 -->
+        $.ajax({
+            <!-- 요청 메서드 (GET 또는 POST 사용) -->
+            type: "GET",
+
+            <!-- 서버 엔드포인트 URL -->
+<!--            url: "https://toyproject.shucloud.site/recommand/[[${board['boardNum']}]]",-->
+            url: "http://localhost:8080/recommand/[[${board['boardNum']}]]",
+
+            <!-- 서버로 전송할 데이터 -->
+<!--            data: requestData,-->
+
+            <!-- 응답 데이터 형식 (JSON 등) -->
+            dataType: "json",
+
+            <!-- 성공적으로 응답 받았을 때 실행되는 콜백 함수 -->
+            success: function(response) {
+                alert("추천!!");
+                console.log(response);
+
+                $("#recommandButton > span").text(response);
+                $(".top-recommand").text(response);
+
+            <!-- $("#result").html("서버 응답: " + JSON.stringify(response));-->
+            },
+
+            <!-- 오류 발생 시 실행되는 콜백 함수 -->
+            error: function(xhr, status, error) {
+                alert(xhr.responseJSON.msg);
+<!--                console.log(xhr.responseJSON.code);-->
+<!--                console.log(xhr.responseJSON.msg);-->
+<!--                console.log(xhr.status);-->
+            }
+        });
+    });
 </script>
 
 <!-- Place this tag in your head or just before your close body tag. -->

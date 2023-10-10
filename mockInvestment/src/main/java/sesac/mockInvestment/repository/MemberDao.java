@@ -12,14 +12,9 @@ import java.util.ArrayList;
 
 
 public interface MemberDao {
-
     MemberDto findById(String id);
     ArrayList<MemberDto> findAll();
-
     int save(RegisterMemberFormDto memberDto);
     int update(String id, EditMemberFormDto memberDto);
     int delete(String id);
-
-    void close(Statement stmt, ResultSet resultSet);
-
 }
