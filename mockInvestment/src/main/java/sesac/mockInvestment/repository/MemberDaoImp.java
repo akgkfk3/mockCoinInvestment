@@ -13,8 +13,6 @@ import sesac.mockInvestment.utils.JdbcUtil;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Slf4j
@@ -59,6 +57,7 @@ public class MemberDaoImp implements MemberDao {
         }finally {
             jdbcUtil.close(rs);
             jdbcUtil.close(pstmt);
+            jdbcUtil.close(conn);
         }
 
 
@@ -68,13 +67,13 @@ public class MemberDaoImp implements MemberDao {
 
     @Override
     public ArrayList<MemberDto> findAll(){
-        Connection conn =null;
-
         String sql = "select * from MEMBERS";
+
+        Connection conn =null;
         PreparedStatement pstmt =null;
         ResultSet rs =null;
 
-        MemberDto member = null;
+
         ArrayList<MemberDto> members = new ArrayList<>();
         try{
             conn = dataSource.getConnection();
@@ -82,17 +81,19 @@ public class MemberDaoImp implements MemberDao {
             rs =  pstmt.executeQuery();
 
             while (rs.next()) {
-                member  = new MemberDto(
-                        rs.getString("id"),
-                        rs.getString("password"),
-                        rs.getString("name"),
-                        rs.getDate("birthDate"),
-                        rs.getString("gender"),
-                        rs.getString("phoneNumber"),
-                        rs.getString("email"));
+                MemberDto member = new MemberDto();
+                member.setMemberNum(rs.getInt("memberNum"));
+                member.setId(rs.getString("id"));
+                member.setName(rs.getString("name"));
+                member.setBirthDate(rs.getDate("birthDate"));
+                member.setGender(rs.getString("gender"));
+                member.setPhoneNumber(rs.getString("phoneNumber"));
+                member.setEmail(rs.getString("email"));
+
+
                 members.add(member);
             }
-            System.out.println(members);
+            System.out.println(members+"findAll members 확인");
 
         }
         catch (SQLException e){
@@ -101,6 +102,7 @@ public class MemberDaoImp implements MemberDao {
         }finally {
             jdbcUtil.close(rs);
             jdbcUtil.close(pstmt);
+            jdbcUtil.close(conn);
 
         }
 
@@ -157,6 +159,7 @@ public class MemberDaoImp implements MemberDao {
         }
         finally {
             jdbcUtil.close(pstmt);
+            jdbcUtil.close(conn);
 
         }
 
@@ -188,6 +191,7 @@ public class MemberDaoImp implements MemberDao {
             jdbcUtil.rollback(conn);
         }finally {
             jdbcUtil.close(pstmt);
+            jdbcUtil.close(conn);
         }
 
 
@@ -226,6 +230,7 @@ public class MemberDaoImp implements MemberDao {
                 conn.commit();
             }else {
                 conn.rollback();
+
             }
 
 
@@ -235,6 +240,7 @@ public class MemberDaoImp implements MemberDao {
             jdbcUtil.rollback(conn);
         }finally {
             jdbcUtil.close(pstmt);
+            jdbcUtil.close(conn);
         }
 
 

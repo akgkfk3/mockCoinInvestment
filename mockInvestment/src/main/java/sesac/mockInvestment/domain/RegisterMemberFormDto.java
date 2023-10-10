@@ -48,6 +48,7 @@ public class RegisterMemberFormDto {
     @Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$", message = "ex) 010-1111-2222 형식으로 작성해주세요.")
     private String phoneNumber;
 
+    @NotBlank(message = "Email 주소를 abc@abc.com 형식으로 적어주세요.")
     @NotNull(message = "Email 주소를 abc@abc.com 형식으로 적어주세요.")
     @Email(message = "Email 주소를 abc@abc.com 형식으로 적어주세요.")
     private String email;

@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sesac.mockInvestment.SessionConst;
 import sesac.mockInvestment.argumentresolver.Login;
 import sesac.mockInvestment.domain.*;
 import sesac.mockInvestment.service.MemberService;
@@ -80,7 +81,7 @@ public class MemberController {
     }
 
     @GetMapping("/editMember")
-    public String editMember(@Login LoginMemberFormDto LoginMemberFormDto, Model model, @SessionAttribute("loginMember") MemberDto loginMember) {
+    public String editMember(@Login LoginMemberFormDto LoginMemberFormDto, Model model, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) MemberDto loginMember) {
 
         System.out.println(loginMember+"loginMember DTO체크");
         // loginMember 안에 있는 memberDTO를 Model에 추가
@@ -93,10 +94,12 @@ public class MemberController {
 
 
     @PostMapping("/editMember")
-    public String editMemberPost(@ModelAttribute EditMemberFormDto memberDto, @ModelAttribute GenderType genderType, BindingResult bindingResult, @SessionAttribute("loginMember") MemberDto loginMember, Model model) {
+    public String editMemberPost(@ModelAttribute EditMemberFormDto memberDto, BindingResult bindingResult, @SessionAttribute(name = SessionConst.LOGIN_MEMBER) MemberDto loginMember, Model model) {
 
-        System.out.println(memberDto.toString());
-        System.out.println(loginMember.toString());
+        log.info("memberDto 입니다 {}", memberDto);
+        log.info("loginMember 입니다 {}", loginMember);
+
+        log.info("memberDto {}", memberDto.toString());
 
         model.addAttribute("loginMember", loginMember);
 
@@ -110,8 +113,6 @@ public class MemberController {
 
             return "member/editMember";
         }
-
-
 
         log.info("update 비밀번호 검증 실행하기 전");
         if(memberService.login(memberDto.getId(), memberDto.getOriPassword()) != null){

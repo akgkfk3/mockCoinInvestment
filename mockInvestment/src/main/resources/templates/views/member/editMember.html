@@ -191,7 +191,7 @@
 <!--                            <form id="formProfileSettings" method="POST" action="/editMember" th:action enctype="multipart/form-data">-->
                                 <div class="d-flex align-items-start align-items-sm-center gap-4">
                                     <img
-                                            src="../assets/img/avatars/profile.png"
+                                            src="../assets/img/avatars/1.png"
                                             alt="user-avatar"
                                             class="d-block rounded"
                                             height="100"
@@ -200,7 +200,7 @@
                                     />
                                 <div class="button-wrapper">
                                     <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                                        <span class="d-none d-sm-block">Upload new photo</span>
+                                        <span class="d-none d-sm-block" onclick="uploadImage();">Upload new photo</span>
                                         <i class="bx bx-upload d-block d-sm-none"></i>
                                         <input
                                                 type="file"
@@ -210,9 +210,10 @@
                                                 accept="image/png, image/jpeg"
                                         />
                                     </label>
-                                    <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                    <button type="button" class="btn btn-outline-secondary account-image-reset mb-4" data-bs-toggle="modal"
+                                            data-bs-target="#modalCenter">
                                         <i class="bx bx-reset d-block d-sm-none"></i>
-                                        <span class="d-none d-sm-block">Reset</span>
+                                        <span class="d-none d-sm-block">이미지 지우기</span>
                                     </button>
 
                                     <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
@@ -396,6 +397,38 @@
         <!-- / Layout page -->
     </div>
 
+<!-- Modal1 -->
+<div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCenterTitle">프로필 이미지 삭제</h5>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+
+                    <div class="row">
+                        <div class="mb-3">
+                            이미지를 삭제하시겠습니까? 기본 이미지로 변경됩니다.
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="resetImage();">이미지 제거</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            닫기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal1 -->
+
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
 </div>
@@ -420,5 +453,37 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
+<script>
+    // 이미지 업로드 함수
+    function uploadImage() {
+            // 파일 선택 input 요소 가져오기
+            var fileInput = document.getElementById('upload');
+
+            // 선택한 파일 가져오기
+            var file = fileInput.files[0];
+
+            // 파일이 선택되었는지 확인
+            if (file) {
+                // 파일을 서버에 업로드하는 코드를 여기에 추가
+                // 이후 서버로부터 새로운 프로필 이미지 경로를 받아와서 아래처럼 설정
+                var newImagePath = 'path_to_new_image.jpg';
+                var profileImage = document.getElementById('profileImage');
+                profileImage.src = newImagePath;
+            }
+        }
+
+    // 이미지 리셋 함수
+    function resetImage() {
+        // 기본 프로필 이미지 URL 설정
+        var originalImageUrl = '../assets/img/avatars/profile.png';
+
+        // 이미지 요소 찾기
+        var imageElement = document.getElementById('uploadedAvatar');
+
+        // 이미지의 src 속성을 원래 이미지로 재설정
+        imageElement.src = originalImageUrl;
+    }
+
+</script>
 </body>
 </html>

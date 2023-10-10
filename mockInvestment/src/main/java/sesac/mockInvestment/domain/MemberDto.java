@@ -7,13 +7,16 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @ToString
-public class MemberDto {
+public class MemberDto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private int memberNum;
 
@@ -32,8 +35,11 @@ public class MemberDto {
 
     public MemberDto(String id, String password, String name, java.sql.Date birthDate, String gender, String phoneNumber, String email) {
     }
+
+
+    public MemberDto(int memberNum, String id, String name, java.sql.Date birthDate, String gender, String phoneNumber, String email) {
+    }
     public MemberDto(){}
 
-    public MemberDto(String testtest, String testtest1, String date, String m, String s, String mail) {
-    }
+
 }

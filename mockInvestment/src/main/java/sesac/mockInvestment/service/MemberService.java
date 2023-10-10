@@ -14,7 +14,7 @@ public interface MemberService {
 //    Optional<LoginMemberFormDto> selectById(LoginMemberFormDto LoginMemberFormDto) throws SQLException;
     Optional<MemberDto> selectById(String memberId) throws SQLException;
 
-    List<MemberDto> selectAll() throws SQLException;
+    List<MemberDto> findAll() throws SQLException;
     String save(RegisterMemberFormDto memberDto) throws SQLException;
 
     String update(EditMemberFormDto memberDto);

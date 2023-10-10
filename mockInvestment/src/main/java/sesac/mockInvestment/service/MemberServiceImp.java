@@ -12,6 +12,7 @@ import sesac.mockInvestment.domain.MemberDto;
 import sesac.mockInvestment.domain.RegisterMemberFormDto;
 import sesac.mockInvestment.repository.MemberDao;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +31,8 @@ public class MemberServiceImp implements MemberService {
     }
 
     @Override
-    public List<MemberDto> selectAll() throws SQLException {
-        List<MemberDto> result = memberDao.findAll();
+    public List<MemberDto> findAll() throws SQLException{
+        ArrayList<MemberDto> result = memberDao.findAll();
         return result;
     }
 

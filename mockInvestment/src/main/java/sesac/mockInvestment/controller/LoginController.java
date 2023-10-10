@@ -33,7 +33,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute LoginMemberFormDto loginMemberFormDto) {
-        return "/login/loginForm";
+        return "login/loginForm";
     }
 
 
@@ -55,7 +55,7 @@ public String login(@Validated @ModelAttribute LoginMemberFormDto loginMemberFor
     System.out.println("userName찾기"+loginMember.getName());
     session.setAttribute("loggedInUserName", loginMember.getName());
 
-    return "index";
+    return "redirect:/";
 
 }
 
@@ -65,7 +65,7 @@ public String login(@Validated @ModelAttribute LoginMemberFormDto loginMemberFor
         if (session != null) {
             session.invalidate();
         }
-        return "index";
+        return "redirect:/";
     }
 
 
