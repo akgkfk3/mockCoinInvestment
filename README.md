@@ -1,5 +1,4 @@
-코인정보 사이트 Sesac Coin
-=
+<center> Hi </center>
 
 
 # 📝 프로젝트 소개
