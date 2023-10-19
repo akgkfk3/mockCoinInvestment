@@ -1,4 +1,4 @@
-![image](https://github.com/akgkfk3/mockCoinInvestment/assets/55624470/e1b4d72c-b0ef-4c58-bded-ad832c124f60)# 📝 프로젝트 소개
+# 📝 프로젝트 소개
 
 ![image](https://github.com/akgkfk3/mockCoinInvestment/assets/55624470/02951c36-48e4-44e0-b106-f65a9ee629c4)
 
