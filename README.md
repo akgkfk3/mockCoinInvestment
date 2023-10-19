@@ -21,12 +21,13 @@
 <br/>
 
 ## 🛠 사용 기술
+<b>[Front-end]</b>
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
 
 [Back-end]
    
 
-[Front-end]
-   
+
 
 [Tool & Environment]
      
