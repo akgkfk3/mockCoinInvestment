@@ -8,13 +8,13 @@
 
 ## 💁‍♂️ Wiki
 
-- 📅 개발 일정
-- 📌 Ground Rule
-- 🤙 컨벤션
+- 📅 [개발 일정]([https://](https://github.com/akgkfk3/mockCoinInvestment/wiki/%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EA%B5%AC%EC%A1%B0))
+- 📌 [Ground Rule](https://github.com/akgkfk3/mockCoinInvestment/wiki/%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
+- 🤙 [컨벤션](https://github.com/akgkfk3/mockCoinInvestment/wiki/%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
 - 📁 [디렉토리 구조](https://github.com/akgkfk3/mockCoinInvestment/wiki/%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
-- 📜 API 명세서
-- 🧑‍🎨 와이어프레임
-- 📚 다이어그램 (클래스, 시퀀스)
+- 📜 [API 명세서](https://github.com/akgkfk3/mockCoinInvestment/wiki/%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
+- 🧑‍🎨 [와이어프레임](https://github.com/akgkfk3/mockCoinInvestment/wiki/%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
+- 📚 [다이어그램 (클래스, 시퀀스)](https://github.com/akgkfk3/mockCoinInvestment/wiki/%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
 
 
 
