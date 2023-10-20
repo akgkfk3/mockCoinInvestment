@@ -11,12 +11,12 @@
 - 📅 개발 일정
 - 📌 Ground Rule
 - 🤙 컨벤션
-- 📁 [디렉토리 구조] : (https://github.com/akgkfk3/mockCoinInvestment/wiki/%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
+- 📁 [디렉토리 구조](https://github.com/akgkfk3/mockCoinInvestment/wiki/%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
 - 📜 API 명세서
 - 🧑‍🎨 와이어프레임
 - 📚 다이어그램 (클래스, 시퀀스)
 
-[주소에 대한 설명](http://www.google.co.kr).
+
 
 <br/>
 
