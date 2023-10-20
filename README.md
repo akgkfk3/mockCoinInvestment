@@ -1,11 +1,9 @@
 # 📝 프로젝트 소개
 
-![image](https://github.com/akgkfk3/mockCoinInvestment/assets/55624470/02951c36-48e4-44e0-b106-f65a9ee629c4)
+![image](https://github.com/akgkfk3/SesacAnimal/assets/55624470/ab7d94c8-9762-4f82-9aca-2554ea141ae0)
 
-> ~~~~ 유기견 커뮤니티입니다.
+> 유기견 커뮤니티입니다.
 > 
-
-
 
 
 ## 💁‍♂️ Wiki
