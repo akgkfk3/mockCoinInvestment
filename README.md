@@ -56,8 +56,26 @@
 
 ## 🌟 트러블 슈팅
 
+1. 쿠키가 저장 안되는 이슈 발생
+
+https://velog.io/@swj9077/Cookie%EC%9D%98-domain-%EC%86%8D%EC%84%B1%EA%B3%BC-localhost-%EC%82%AC%EC%9A%A9-%EC%8B%9C-%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD
+https://velog.io/@haiseong/Set-Cookie%EB%A1%9C-%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%EC%97%90-%EC%BF%A0%ED%82%A4-%EC%A0%80%EC%9E%A5%ED%95%98%EA%B8%B0
+
+path 설정 및 Domain 설정 (RFC문서 언급)
+
+
+2. 스프링 부트에서 리다이렉트 시, 프록시로 인해 HTTPS가 아닌 HTTP
+
 
 ## 👩‍💻 리팩토링 계획
+
+1. 스프링 시큐리티 정적 리소스 필터 체인 통과
+
+https://codejava.net/frameworks/spring-boot/fix-websecurityconfigureradapter-deprecated
+
+https://ojt90902.tistory.com/843
+
+https://velog.io/@jeongm/SpringSecurity-staticcssjs...-%ED%8C%8C%EC%9D%BC-%EC%84%A4%EC%A0%95
 
 ## 📋 프로젝트를 진행하며 느낀 점
 
