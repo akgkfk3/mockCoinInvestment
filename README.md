@@ -77,6 +77,11 @@ https://ojt90902.tistory.com/843
 
 https://velog.io/@jeongm/SpringSecurity-staticcssjs...-%ED%8C%8C%EC%9D%BC-%EC%84%A4%EC%A0%95
 
+
+2. AuthCode, TokenProvider 추상화
+
+- 다형성을 이용하기 위해 공통 메소드 부분을 추상화하였습니다.
+
 ## 📋 프로젝트를 진행하며 느낀 점
 
 
