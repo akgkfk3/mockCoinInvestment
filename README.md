@@ -63,11 +63,16 @@ https://velog.io/@haiseong/Set-Cookie%EB%A1%9C-%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0
 
 path 설정 및 Domain 설정 (RFC문서 언급)
 
-
 2. 스프링 부트에서 리다이렉트 시, 프록시로 인해 HTTPS가 아닌 HTTP
 
+3. 쿠키가 삭제 안되는 이슈 발생
 
-## 👩‍💻 리팩토링 계획
+- HttpServletRequest 객체에 담긴 쿠키는 단순히 key-value 값만 가지고 있음
+
+- 삭제하기 위해서는 setMaxage() 외에도 setValue, setPath 등을 지정해주어야 삭제가 됨
+
+
+## 👩‍💻 리팩토링
 
 1. 스프링 시큐리티 정적 리소스 필터 체인 통과
 
